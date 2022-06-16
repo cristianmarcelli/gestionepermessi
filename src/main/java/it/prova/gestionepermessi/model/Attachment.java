@@ -1,0 +1,98 @@
+package it.prova.gestionepermessi.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "attachment")
+public class Attachment {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "nomefile")
+	private String nomeFile;
+	@Column(name = "contenttype")
+	private String contentType;
+	@Lob
+	private byte[] payload;
+
+	@OneToOne(mappedBy = "attachment", fetch = FetchType.LAZY, optional = false)
+	private RichiestaPermesso richiestaPermesso;
+
+	public Attachment() {
+	}
+
+	public Attachment(String nomeFile, String contentType) {
+		super();
+		this.nomeFile = nomeFile;
+		this.contentType = contentType;
+	}
+
+	public Attachment(Long id, String nomeFile, String contentType, byte[] payload,
+			RichiestaPermesso richiestaPermesso) {
+		super();
+		this.id = id;
+		this.nomeFile = nomeFile;
+		this.contentType = contentType;
+		this.payload = payload;
+		this.richiestaPermesso = richiestaPermesso;
+	}
+
+	public Attachment(String nomeFile, String contentType, byte[] payload, RichiestaPermesso richiestaPermesso) {
+		super();
+		this.nomeFile = nomeFile;
+		this.contentType = contentType;
+		this.payload = payload;
+		this.richiestaPermesso = richiestaPermesso;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNomeFile() {
+		return nomeFile;
+	}
+
+	public void setNomeFile(String nomeFile) {
+		this.nomeFile = nomeFile;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public byte[] getPayload() {
+		return payload;
+	}
+
+	public void setPayload(byte[] payload) {
+		this.payload = payload;
+	}
+
+	public RichiestaPermesso getRichiestaPermesso() {
+		return richiestaPermesso;
+	}
+
+	public void setRichiestaPermesso(RichiestaPermesso richiestaPermesso) {
+		this.richiestaPermesso = richiestaPermesso;
+	}
+
+}
