@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "richiestaPermesso")
+@Table(name = "richiestapermesso")
 public class RichiestaPermesso {
 
 	@Id

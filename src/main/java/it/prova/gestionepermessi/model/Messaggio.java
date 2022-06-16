@@ -32,7 +32,7 @@ public class Messaggio {
 	private Date dataLettura;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "richiesta_permesso_id", referencedColumnName = "id")
+	@JoinColumn(name = "richiestapermesso_id", referencedColumnName = "id")
 	private RichiestaPermesso richiestaPermesso;
 
 	public Messaggio() {
