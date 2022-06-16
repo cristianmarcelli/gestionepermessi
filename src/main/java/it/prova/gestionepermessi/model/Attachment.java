@@ -2,12 +2,10 @@ package it.prova.gestionepermessi.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -41,7 +39,6 @@ public class Attachment {
 		this.nomeFile = nomeFile;
 		this.contentType = contentType;
 		this.payload = payload;
-		this.richiestaPermesso = richiestaPermesso;
 	}
 
 	public Attachment(String nomeFile, String contentType, byte[] payload, RichiestaPermesso richiestaPermesso) {
@@ -49,7 +46,6 @@ public class Attachment {
 		this.nomeFile = nomeFile;
 		this.contentType = contentType;
 		this.payload = payload;
-		this.richiestaPermesso = richiestaPermesso;
 	}
 
 	public Long getId() {
@@ -82,14 +78,6 @@ public class Attachment {
 
 	public void setPayload(byte[] payload) {
 		this.payload = payload;
-	}
-
-	public RichiestaPermesso getRichiestaPermesso() {
-		return richiestaPermesso;
-	}
-
-	public void setRichiestaPermesso(RichiestaPermesso richiestaPermesso) {
-		this.richiestaPermesso = richiestaPermesso;
 	}
 
 }

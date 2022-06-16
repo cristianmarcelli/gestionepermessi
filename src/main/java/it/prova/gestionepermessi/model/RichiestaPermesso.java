@@ -33,7 +33,7 @@ public class RichiestaPermesso {
 	@Column(name = "datafine")
 	private Date dataFine;
 	@Column(name = "approvato")
-	private boolean approvato;
+	private Boolean approvato;
 	@Column(name = "codicecertificato")
 	private String codiceCertificato;
 	@Column(name = "note")

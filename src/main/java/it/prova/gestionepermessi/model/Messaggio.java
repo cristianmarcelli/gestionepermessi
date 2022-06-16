@@ -25,7 +25,7 @@ public class Messaggio {
 	@Column(name = "oggetto")
 	private String oggetto;
 	@Column(name = "letto")
-	private boolean letto;
+	private Boolean letto;
 	@Column(name = "datainserimento")
 	private Date dataInserimento;
 	@Column(name = "datalettura")

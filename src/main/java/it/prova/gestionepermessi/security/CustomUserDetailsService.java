@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import it.prova.raccoltafilmspringmvc.model.Utente;
-import it.prova.raccoltafilmspringmvc.repository.utente.UtenteRepository;
+import it.prova.gestionepermessi.model.Utente;
+import it.prova.gestionepermessi.repository.utente.UtenteRepository;
 
 @Service
 @Transactional
