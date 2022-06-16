@@ -25,9 +25,6 @@ public class Attachment {
 	@Lob
 	private byte[] payload;
 
-	@OneToOne(mappedBy = "attachment", fetch = FetchType.LAZY, optional = false)
-	private RichiestaPermesso richiestaPermesso;
-
 	public Attachment() {
 	}
 

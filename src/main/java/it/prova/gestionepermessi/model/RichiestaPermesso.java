@@ -39,11 +39,7 @@ public class RichiestaPermesso {
 	@Column(name = "note")
 	private String note;
 
-	@OneToOne
-	@JoinColumn(name = "messaggio_id", referencedColumnName = "id")
-	private Messaggio messaggio;
-
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "attachment_id", referencedColumnName = "id")
 	private Attachment attachment;
 
@@ -52,7 +48,7 @@ public class RichiestaPermesso {
 	private Dipendente dipendente;
 
 	public RichiestaPermesso(Long id, TipoPermesso tipoPermesso, Date dataInizio, Date dataFine, boolean approvato,
-			String codiceCertificato, String note, Messaggio messaggio, Attachment attachment, Dipendente dipendente) {
+			String codiceCertificato, String note, Attachment attachment, Dipendente dipendente) {
 		super();
 		this.id = id;
 		this.tipoPermesso = tipoPermesso;
@@ -61,7 +57,6 @@ public class RichiestaPermesso {
 		this.approvato = approvato;
 		this.codiceCertificato = codiceCertificato;
 		this.note = note;
-		this.messaggio = messaggio;
 		this.attachment = attachment;
 		this.dipendente = dipendente;
 	}

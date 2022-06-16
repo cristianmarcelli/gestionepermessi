@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,7 +31,8 @@ public class Messaggio {
 	@Column(name = "datalettura")
 	private Date dataLettura;
 
-	@OneToOne(mappedBy = "messaggio", fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "richiesta_permesso_id", referencedColumnName = "id")
 	private RichiestaPermesso richiestaPermesso;
 
 	public Messaggio() {
