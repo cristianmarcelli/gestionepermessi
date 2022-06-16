@@ -75,6 +75,13 @@ public class Utente {
 		this.password = password;
 	}
 
+	public Utente(String username, String password, Date dateCreated) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.dateCreated = dateCreated;
+	}
+
 	public Long getId() {
 		return id;
 	}

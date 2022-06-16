@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import it.prova.gestionepermessi.model.Ruolo;
@@ -34,6 +35,7 @@ public class UtenteDTO {
 
 	private List<RuoloDTO> ruoli;
 
+	@NotNull(message = "{dipendente.notnull}")
 	private DipendenteDTO dipendenteDTO;
 
 	public UtenteDTO() {
