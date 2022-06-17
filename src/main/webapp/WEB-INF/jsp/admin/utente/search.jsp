@@ -31,8 +31,18 @@
 						<form method="post" action="${pageContext.request.contextPath}/utente/listFindByExample" class="row g-3">
 						
 							<div class="col-md-6">
+								<label for="nome" class="form-label">Nome</label>
+								<input type="text" class="form-control" name="nome" id="nome" placeholder="Inserire il nome" >
+							</div>
+							
+							<div class="col-md-6">
+								<label for="cognome" class="form-label">Cognome</label>
+								<input type="text" class="form-control" name="cognome" id="cognome" placeholder="Inserire il cognome" >
+							</div>
+						
+							<div class="col-md-6">
 								<label for="username" class="form-label">Username</label>
-								<input type="text" class="form-control" name="username" id="username" placeholder="Inserire username" >
+								<input type="text" class="form-control" name="username" id="username" placeholder="Inserire l'username" >
 							</div>
 							<div class="col-md-6">
 								<label for="dateCreated" class="form-label">Data di Creazione</label>

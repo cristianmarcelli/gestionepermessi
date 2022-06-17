@@ -23,14 +23,14 @@ import it.prova.gestionepermessi.service.UtenteService;
 @Controller
 @RequestMapping(value = "/utente")
 public class UtenteController {
-	
+
 	@Autowired
 	private UtenteService utenteService;
-	
+
 	@Autowired
 	private RuoloService ruoloService;
-	
-	//Lista di utenti
+
+	// Lista di utenti
 	@GetMapping("list")
 	public ModelAndView listAllUtenti() {
 		ModelAndView mv = new ModelAndView();
@@ -40,8 +40,8 @@ public class UtenteController {
 		mv.setViewName("admin/utente/list");
 		return mv;
 	}
-	
-	//Visualizza dettaglio Utente
+
+	// Visualizza dettaglio Utente
 	@GetMapping("/show/{idUtente}")
 	public String showUtente(@PathVariable(required = true) Long idUtente, Model model) {
 		List<RuoloDTO> ruoli = RuoloDTO
@@ -51,8 +51,8 @@ public class UtenteController {
 		model.addAttribute("show_utente_attr", utenteDTO);
 		return "admin/utente/show";
 	}
-	
-	//Ricerca utenti
+
+	// Ricerca utenti
 	@GetMapping("/search")
 	public String searchUtente(Model model) {
 		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
@@ -64,8 +64,7 @@ public class UtenteController {
 			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
 			ModelMap model) {
 
-		List<Utente> utenti = utenteService
-				.findByExample(utenteExample, pageNo, pageSize, sortBy).getContent();
+		List<Utente> utenti = utenteService.findByExample(utenteExample, pageNo, pageSize, sortBy).getContent();
 
 		model.addAttribute("utenti_list_attribute", UtenteDTO.createUtenteDTOListFromModelList(utenti));
 		return "admin/utente/list";
