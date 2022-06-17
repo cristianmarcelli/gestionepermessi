@@ -35,5 +35,7 @@ public interface UtenteService {
 	public Utente findByUsername(String username);
 
 	public void inserisciNuovoConDipendente(Utente utenteInstance, Dipendente dipendenteInstance);
+	
+	public void resetPasswordService(Long idUtente);
 
 }

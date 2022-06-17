@@ -215,4 +215,9 @@ public class UtenteServiceImpl implements UtenteService {
 		dipendenteRepository.save(dipendenteInstance);
 	}
 
+	@Transactional
+	public void resetPasswordService(Long idUtente) {
+		repository.resetPasswordRepository(idUtente, passwordEncoder.encode("Password@01"));
+	}
+
 }

@@ -76,8 +76,8 @@ public class UtenteController {
 		model.addAttribute("utenti_list_attribute", UtenteDTO.createUtenteDTOListFromModelList(utenti));
 		return "admin/utente/list";
 	}
-	
-	//Modifica ruoli utente
+
+	// Modifica ruoli utente
 	@GetMapping("/edit/{idUtente}")
 	public String edit(@PathVariable(required = true) Long idUtente, Model model) {
 		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
@@ -98,6 +98,25 @@ public class UtenteController {
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente/list";
+	}
+
+	// cambia stato attivo/disattivo
+	@PostMapping("/cambiaStato")
+	public String cambiaStato(@RequestParam(name = "idUtenteForChangingStato", required = true) Long idUtente) {
+		utenteService.changeUserAbilitation(idUtente);
+		return "redirect:/utente/list";
+	}
+
+	// reset password in line
+	@PostMapping("/resetPassword")
+	public String resetPassword(@RequestParam(name = "idUtenteForResetPassword", required = true) Long idUtente,
+			RedirectAttributes redirectAttrs) {
+
+		utenteService.resetPasswordService(idUtente);
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/utente/list";
+
 	}
 
 }
