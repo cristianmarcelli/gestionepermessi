@@ -22,7 +22,7 @@ public class DipendenteServiceImpl implements DipendenteService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Autowired
 	private DipendenteRepository repository;
 
@@ -89,8 +89,8 @@ public class DipendenteServiceImpl implements DipendenteService {
 			whereClauses.add(" d.sesso =:sesso ");
 			paramaterMap.put("sesso", example.getSesso());
 		}
-		
-		queryBuilder.append(!whereClauses.isEmpty()?" and ":"");
+
+		queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");
 		queryBuilder.append(StringUtils.join(whereClauses, " and "));
 		TypedQuery<Dipendente> typedQuery = entityManager.createQuery(queryBuilder.toString(), Dipendente.class);
 
@@ -100,5 +100,5 @@ public class DipendenteServiceImpl implements DipendenteService {
 
 		return typedQuery.getResultList();
 	}
-	
+
 }

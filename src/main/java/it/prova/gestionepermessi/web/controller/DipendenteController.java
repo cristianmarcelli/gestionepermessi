@@ -24,13 +24,13 @@ public class DipendenteController {
 	private DipendenteService dipendenteService;
 
 	// lista dipendenti
-	@GetMapping("/list")
+	@GetMapping("list")
 	public ModelAndView listAllDipendenti() {
 		ModelAndView mv = new ModelAndView();
 		List<Dipendente> dipendenti = dipendenteService.listAllElements();
 		// trasformiamo in DTO
 		mv.addObject("dipendenti_list_attribute", DipendenteDTO.createDipendenteDTOListFromModelList(dipendenti));
-		mv.setViewName("admin/list");
+		mv.setViewName("admin/dipendente/list");
 		return mv;
 	}
 
@@ -38,7 +38,7 @@ public class DipendenteController {
 	@GetMapping("/show/{idDipendente}")
 	public String showDipendente(@PathVariable(required = true) Long idDipendente, Model model) {
 		model.addAttribute("show_dipendente_attr", dipendenteService.caricaSingoloElemento(idDipendente));
-		return "admin/show";	
+		return "admin/dipendente/show";	
 	}
 
 	// Ricerca dipendenti in admin
@@ -46,14 +46,14 @@ public class DipendenteController {
 	public String searchDipendente(Model model) {
 		model.addAttribute("dipendenti_list_attribute",
 				DipendenteDTO.createDipendenteDTOListFromModelList(dipendenteService.listAllElements()));
-		return "admin/search";
+		return "admin/dipendente/search";
 	}
 
 	@PostMapping("/listFindByExample")
 	public String listDipendenti(DipendenteDTO dipendenteExample, ModelMap model) {
 		List<Dipendente> dipendenti = dipendenteService.findByExample(dipendenteExample.buildDipendenteModel());
 		model.addAttribute("dipendenti_list_attribute", DipendenteDTO.createDipendenteDTOListFromModelList(dipendenti));
-		return "admin/list";
+		return "admin/dipendente/list";
 	}
 
 }

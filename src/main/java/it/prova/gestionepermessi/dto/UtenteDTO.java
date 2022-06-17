@@ -5,15 +5,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
-import it.prova.gestionepermessi.validation.ValidationNoPassword;
-import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 public class UtenteDTO {
 
@@ -64,6 +61,16 @@ public class UtenteDTO {
 		super();
 		this.username = username;
 		this.password = password;
+	}
+
+	public UtenteDTO(Long id,
+			@Size(min = 3, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String username,
+			Date dateCreated, StatoUtente stato) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.dateCreated = dateCreated;
+		this.stato = stato;
 	}
 
 	public Long getId() {
@@ -146,31 +153,30 @@ public class UtenteDTO {
 		return this.stato != null && this.stato.equals(StatoUtente.DISABILITATO);
 	}
 
-//	public Utente buildUtenteModel(boolean includeIdRoles) {
-//		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated,
-//				this.stato);
-//		if (includeIdRoles && ruoliIds != null)
-//			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
-//
-//		return result;
-//	}
-//
-//	// niente password...
-//	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel) {
-//		UtenteDTO result = new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(),
-//				utenteModel.getCognome(), utenteModel.getDateCreated(), utenteModel.getStato());
-//
-//		if (!utenteModel.getRuoli().isEmpty())
-//			result.ruoliIds = utenteModel.getRuoli().stream().map(r -> r.getId()).collect(Collectors.toList())
-//					.toArray(new Long[] {});
-//
-//		return result;
-//	}
-//
-//	public static List<UtenteDTO> createUtenteDTOListFromModelList(List<Utente> modelListInput) {
-//		return modelListInput.stream().map(utenteEntity -> {
-//			return UtenteDTO.buildUtenteDTOFromModel(utenteEntity);
-//		}).collect(Collectors.toList());
-//	}
+	public Utente buildUtenteModel(boolean includeIdRoles) {
+		Utente result = new Utente(this.id, this.username, this.password, this.dateCreated, this.stato);
+		if (includeIdRoles && ruoliIds != null)
+			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
+
+		return result;
+	}
+
+	// niente password...
+	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel) {
+		UtenteDTO result = new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getDateCreated(),
+				utenteModel.getStato());
+
+		if (!utenteModel.getRuoli().isEmpty())
+			result.ruoliIds = utenteModel.getRuoli().stream().map(r -> r.getId()).collect(Collectors.toList())
+					.toArray(new Long[] {});
+
+		return result;
+	}
+
+	public static List<UtenteDTO> createUtenteDTOListFromModelList(List<Utente> modelListInput) {
+		return modelListInput.stream().map(utenteEntity -> {
+			return UtenteDTO.buildUtenteDTOFromModel(utenteEntity);
+		}).collect(Collectors.toList());
+	}
 
 }

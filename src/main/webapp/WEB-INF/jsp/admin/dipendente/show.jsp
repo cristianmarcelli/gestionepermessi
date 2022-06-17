@@ -4,13 +4,13 @@
 <html lang="it" class="h-100">
 <head>
 	<!-- Common imports in pages -->
-	<jsp:include page="../header.jsp" />
+	<jsp:include page="../../header.jsp" />
 	<title>Visualizza Dipendente</title>
 	
 </head>
 <body class="d-flex flex-column h-100">
 	<!-- Fixed navbar -->
-	<jsp:include page="../navbar.jsp" />
+	<jsp:include page="../../navbar.jsp" />
 	
 	<!-- Begin page content -->
 	<main class="flex-shrink-0">
@@ -77,7 +77,7 @@
 		</div>
 		
 	</main>
-	<jsp:include page="../footer.jsp" />
+	<jsp:include page="../../footer.jsp" />
 	
 </body>
 </html>

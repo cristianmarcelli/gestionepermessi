@@ -19,17 +19,17 @@
            <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utenti</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/list">Lista Utenti</a>
 		          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/search">Ricerca Utenti</a>
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/insert">Inserisci Utente</a>
 		        </div>
 		      </li>
            
-           	            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dipendenti</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown07">
-            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/list">Lista Dipendenti</a></li>
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a></li>
-            </ul> 
+           <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dipendenti</a>
+	            <ul class="dropdown-menu" aria-labelledby="dropdown07">
+	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/list">Lista Dipendenti</a></li>
+	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a></li>
+	            </ul> 
           </li>
            
 		   </sec:authorize>
