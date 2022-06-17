@@ -1,9 +1,12 @@
 package it.prova.gestionepermessi.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionepermessi.dto.UtenteSearchDTO;
 import it.prova.gestionepermessi.model.Dipendente;
+import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.repository.dipendente.DipendenteRepository;
@@ -33,8 +38,11 @@ public class UtenteServiceImpl implements UtenteService {
 //	private DipendenteService dipendenteService;
 
 	@Autowired
+	private UtenteRepository repository;
+
+	@Autowired
 	private UtenteRepository utenteRepository;
-	
+
 	@Autowired
 	private DipendenteRepository dipendenteRepository;
 
@@ -80,26 +88,69 @@ public class UtenteServiceImpl implements UtenteService {
 		utenteRepository.delete(utenteInstance);
 	}
 
-	public Page<Utente> findByExample(Utente example, Integer pageNo, Integer pageSize, String sortBy) {
+//	public Page<Utente> findByExample(Utente example, Integer pageNo, Integer pageSize, String sortBy) {
+//
+//		Specification<Utente> specificationCriteria = (root, query, cb) -> {
+//
+//			List<Predicate> predicates = new ArrayList<Predicate>();
+//
+//			if (StringUtils.isNotEmpty(example.getUsername()))
+//				predicates
+//						.add(cb.like(cb.upper(root.get("username")), "%" + example.getUsername().toUpperCase() + "%"));
+//
+//			if (example.getStato() != null)
+//				predicates.add(cb.equal(root.get("stato"), example.getStato()));
+//
+//			if (example.getDateCreated() != null)
+//				predicates.add(cb.greaterThanOrEqualTo(root.get("dateCreated"), example.getDateCreated()));
+//
+//			if (!example.getRuoli().isEmpty()) {
+//				predicates.add(root.join("ruoli").in(example.getRuoli()));
+//			}
+//
+//			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+//		};
+//
+//		Pageable paging = null;
+//		// se non passo parametri di paginazione non ne tengo conto
+//		if (pageSize == null || pageSize < 10)
+//			paging = Pageable.unpaged();
+//		else
+//			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+//
+//		return utenteRepository.findAll(specificationCriteria, paging);
+//	}
 
+	@Transactional(readOnly = true)
+	public Page<Utente> findByExample(UtenteSearchDTO example, Integer pageNo, Integer pageSize, String sortBy) {
 		Specification<Utente> specificationCriteria = (root, query, cb) -> {
 
 			List<Predicate> predicates = new ArrayList<Predicate>();
+
+			// faccio fetch del dipendente e ruoli a prescindere
+			root.fetch("dipendente", JoinType.INNER);
+			root.fetch("ruoli", JoinType.LEFT);
 
 			if (StringUtils.isNotEmpty(example.getUsername()))
 				predicates
 						.add(cb.like(cb.upper(root.get("username")), "%" + example.getUsername().toUpperCase() + "%"));
 
+			if (example.getNome() != null && StringUtils.isNotEmpty(example.getNome()))
+				predicates.add(cb.like(cb.upper(root.join("dipendente", JoinType.INNER).get("nome")),
+						"%" + example.getNome().toUpperCase() + "%"));
+
+			if (example.getCognome() != null && StringUtils.isNotEmpty(example.getCognome()))
+				predicates.add(cb.like(cb.upper(root.join("dipendente", JoinType.INNER).get("cognome")),
+						"%" + example.getCognome().toUpperCase() + "%"));
+
 			if (example.getStato() != null)
 				predicates.add(cb.equal(root.get("stato"), example.getStato()));
 
-			if (example.getDateCreated() != null)
-				predicates.add(cb.greaterThanOrEqualTo(root.get("dateCreated"), example.getDateCreated()));
+			if (example.getRuoliIds() != null && example.getRuoliIds().length > 0)
+				predicates.add(root.join("ruoli").in(Arrays.asList(example.getRuoliIds()).stream()
+						.map(id -> new Ruolo(id)).collect(Collectors.toSet())));
 
-			if (!example.getRuoli().isEmpty()) {
-				predicates.add(root.join("ruoli").in(example.getRuoli()));
-			}
-
+			query.distinct(true);
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
 
@@ -110,7 +161,7 @@ public class UtenteServiceImpl implements UtenteService {
 		else
 			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-		return utenteRepository.findAll(specificationCriteria, paging);
+		return repository.findAll(specificationCriteria, paging);
 	}
 
 	@Transactional(readOnly = true)
@@ -150,7 +201,7 @@ public class UtenteServiceImpl implements UtenteService {
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword()));
 		utenteInstance.setDateCreated(new Date());
 		utenteRepository.save(utenteInstance);
-		
+
 		dipendenteRepository.save(dipendenteInstance);
 	}
 
