@@ -74,6 +74,16 @@ public class UtenteServiceImpl implements UtenteService {
 		utenteReloaded.setRuoli(utenteInstance.getRuoli());
 		utenteRepository.save(utenteReloaded);
 	}
+	
+	@Transactional
+	public void aggiornaPerEdit(Utente utenteInstance) {
+		// deve aggiornare solo nome, cognome, username, ruoli
+		Utente utenteReloaded = utenteRepository.findById(utenteInstance.getId()).orElse(null);
+		if (utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		utenteReloaded.setRuoli(utenteInstance.getRuoli());
+		utenteRepository.save(utenteReloaded);
+	}
 
 	@Transactional
 	public void inserisciNuovo(Utente utenteInstance) {

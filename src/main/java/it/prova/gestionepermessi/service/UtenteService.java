@@ -17,6 +17,8 @@ public interface UtenteService {
 	public Utente caricaSingoloUtenteConRuoli(Long id);
 
 	public void aggiorna(Utente utenteInstance);
+	
+	public void aggiornaPerEdit(Utente utenteInstance);
 
 	public void inserisciNuovo(Utente utenteInstance);
 
