@@ -128,6 +128,94 @@ public class DipendenteDTO {
 		this.utenteDTO = utenteDTO;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public String getCodFis() {
+		return codFis;
+	}
+
+	public void setCodFis(String codFis) {
+		this.codFis = codFis;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getDataNascita() {
+		return dataNascita;
+	}
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
+	public Date getDataAssunzione() {
+		return dataAssunzione;
+	}
+
+	public void setDataAssunzione(Date dataAssunzione) {
+		this.dataAssunzione = dataAssunzione;
+	}
+
+	public Date getDataDimissioni() {
+		return dataDimissioni;
+	}
+
+	public void setDataDimissioni(Date dataDimissioni) {
+		this.dataDimissioni = dataDimissioni;
+	}
+
+	public Long[] getRichiestePermessiIds() {
+		return richiestePermessiIds;
+	}
+
+	public void setRichiestePermessiIds(Long[] richiestePermessiIds) {
+		this.richiestePermessiIds = richiestePermessiIds;
+	}
+
+	public Sesso getSesso() {
+		return sesso;
+	}
+
+	public void setSesso(Sesso sesso) {
+		this.sesso = sesso;
+	}
+
+	public UtenteDTO getUtenteDTO() {
+		return utenteDTO;
+	}
+
+	public void setUtenteDTO(UtenteDTO utenteDTO) {
+		this.utenteDTO = utenteDTO;
+	}
+
 	public Dipendente buildDipendenteModel() {
 		return new Dipendente(this.id, this.nome, this.cognome, this.codFis, this.email, this.dataNascita,
 				this.dataAssunzione, this.dataDimissioni, this.sesso);
