@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +23,7 @@ public class DipendenteController {
 	@Autowired
 	private DipendenteService dipendenteService;
 
+	// lista dipendenti
 	@GetMapping("/list")
 	public ModelAndView listAllDipendenti() {
 		ModelAndView mv = new ModelAndView();
@@ -30,11 +33,27 @@ public class DipendenteController {
 		mv.setViewName("admin/list");
 		return mv;
 	}
-	
+
+	// visualizza dipendenti nella lista
 	@GetMapping("/show/{idDipendente}")
 	public String showDipendente(@PathVariable(required = true) Long idDipendente, Model model) {
 		model.addAttribute("show_dipendente_attr", dipendenteService.caricaSingoloElemento(idDipendente));
-		return "admin/show";
+		return "admin/show";	
 	}
-	
+
+	// Ricerca dipendenti in admin
+	@GetMapping("/search")
+	public String searchDipendente(Model model) {
+		model.addAttribute("dipendenti_list_attribute",
+				DipendenteDTO.createDipendenteDTOListFromModelList(dipendenteService.listAllElements()));
+		return "admin/search";
+	}
+
+	@PostMapping("/listFindByExample")
+	public String listDipendenti(DipendenteDTO dipendenteExample, ModelMap model) {
+		List<Dipendente> dipendenti = dipendenteService.findByExample(dipendenteExample.buildDipendenteModel());
+		model.addAttribute("dipendenti_list_attribute", DipendenteDTO.createDipendenteDTOListFromModelList(dipendenti));
+		return "admin/list";
+	}
+
 }

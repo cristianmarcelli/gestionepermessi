@@ -17,5 +17,5 @@ public interface DipendenteService {
 	public void rimuovi(Long idDipendente);
 
 	public List<Dipendente> findByExample(Dipendente example);
-
+	
 }
