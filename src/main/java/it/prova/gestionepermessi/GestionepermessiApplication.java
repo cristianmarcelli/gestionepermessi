@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.Ruolo;
+import it.prova.gestionepermessi.model.Sesso;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.RuoloService;
 import it.prova.gestionepermessi.service.UtenteService;
@@ -40,7 +41,7 @@ public class GestionepermessiApplication implements CommandLineRunner {
 		}
 
 		if (utenteServiceInstance.findByUsername("admin") == null) {
-			Dipendente dipendente = new Dipendente("Claudio", "Buzi", "CLDBZ501HHHHHHHH");
+			Dipendente dipendente = new Dipendente("Claudio", "Buzi", "CLDBZ501HHHHHHHH", "c.buzi@prova.it", new Date(), new Date(), null, Sesso.MASCHIO);
 			Utente admin = new Utente("admin", "admin", new Date());
 			admin.setDipendente(dipendente);
 			dipendente.setUtente(admin);
@@ -51,7 +52,7 @@ public class GestionepermessiApplication implements CommandLineRunner {
 		}
 		
 		if (utenteServiceInstance.findByUsername("admin2") == null) {
-			Dipendente dipendente = new Dipendente("Francesco", "Bianchi", "FRNBNC501HHHHHHH");
+			Dipendente dipendente = new Dipendente("Francesco", "Bianchi", "FRNBNC501HHHHHHH", "f.bianchi@prova.it", new Date(), new Date(), null, Sesso.MASCHIO);
 			Utente admin = new Utente("admin2", "admin2", new Date());
 			admin.setDipendente(dipendente);
 			dipendente.setUtente(admin);
@@ -62,7 +63,7 @@ public class GestionepermessiApplication implements CommandLineRunner {
 		}
 
 		if (utenteServiceInstance.findByUsername("backoffice") == null) {
-			Dipendente dipendente = new Dipendente("Gianfranco", "Brandi", "GNFBRD501HHHHHHH");
+			Dipendente dipendente = new Dipendente("Gianna", "Brandi", "GNNBRD501HHHHHHH", "g.brandi@prova.it", new Date(), new Date(), null, Sesso.FEMMINA);
 			Utente boUser = new Utente("backoffice", "backoffice", new Date());
 
 			boUser.setDipendente(dipendente);
