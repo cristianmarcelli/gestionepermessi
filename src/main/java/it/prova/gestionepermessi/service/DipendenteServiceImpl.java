@@ -58,6 +58,12 @@ public class DipendenteServiceImpl implements DipendenteService {
 	public void inserisciNuovo(Dipendente dipendenteInstance) {
 		dipendenteRepository.save(dipendenteInstance);
 	}
+	
+	@Transactional
+	public void inserisciNuovoConUtente(Dipendente dipendenteInstance, Utente utenteInstance) {
+		utenteRepository.save(utenteInstance)
+		dipendenteRepository.save(dipendenteInstance);
+	}
 
 	@Transactional
 	public void rimuovi(Long idDipendente) {
