@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,9 @@ public class DipendenteServiceImpl implements DipendenteService {
 	@Autowired
 	private RuoloService ruoloServiceInstance;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Dipendente> listAllElements() {
@@ -56,12 +60,6 @@ public class DipendenteServiceImpl implements DipendenteService {
 
 	@Transactional
 	public void inserisciNuovo(Dipendente dipendenteInstance) {
-		dipendenteRepository.save(dipendenteInstance);
-	}
-	
-	@Transactional
-	public void inserisciNuovoConUtente(Dipendente dipendenteInstance, Utente utenteInstance) {
-		utenteRepository.save(utenteInstance)
 		dipendenteRepository.save(dipendenteInstance);
 	}
 
@@ -128,7 +126,7 @@ public class DipendenteServiceImpl implements DipendenteService {
 		// stato, username, password, ruolo - email
 
 		utenteInstance.setStato(StatoUtente.CREATO);
-		utenteInstance.setPassword("Password@01");
+		utenteInstance.setPassword(passwordEncoder.encode("Password@01"));
 		utenteInstance.setDateCreated(new Date());
 		utenteInstance.setUsername(dipendenteInstance.getNome().charAt(0) + "." + dipendenteInstance.getCognome());
 		utenteInstance.getRuoli()

@@ -80,7 +80,7 @@
      
       <div class="collapse navbar-collapse text-right" id="navbarsExample07">
       	<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      		   <sec:authorize access="hasAnyRole('ADMIN', 'BO_USER')">
+      		   <sec:authorize access="hasAnyRole('ADMIN', 'BO_USER', 'DIPENDENTE_USER')">
 			   <li class="nav-item dropdown ">
 		        <a class="nav-link dropdown-toggle " href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Account</a>
 		        <div class="dropdown-menu " aria-labelledby="dropdown01">
