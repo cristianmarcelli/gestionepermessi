@@ -47,6 +47,7 @@
 										<td>${dipendenteItem.codFis }</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dipendente/showDipendenteBackoffice/${dipendenteItem.id }">Visualizza</a>
+											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/dipendente/editDipendenteBackoffice/${dipendenteItem.id }">Edit</a>
 										</td>
 									</tr>
 								</c:forEach>

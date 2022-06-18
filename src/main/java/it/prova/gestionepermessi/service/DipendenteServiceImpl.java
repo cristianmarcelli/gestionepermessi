@@ -33,13 +33,13 @@ public class DipendenteServiceImpl implements DipendenteService {
 
 	@Autowired
 	private UtenteRepository utenteRepository;
-	
+
 	@Autowired
 	private RuoloService ruoloServiceInstance;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Dipendente> listAllElements() {
@@ -58,16 +58,37 @@ public class DipendenteServiceImpl implements DipendenteService {
 		dipendenteRepository.save(dipendenteInstance);
 	}
 
+	@Override
+	@Transactional
+	public void aggiornaDipendente(Dipendente dipendenteInstance) {
+		Dipendente dipendenteDaModificare = dipendenteRepository.findByIdConUtente(dipendenteInstance.getId())
+				.orElse(null);
+		if (dipendenteDaModificare == null || dipendenteDaModificare.getUtente() == null) {
+			throw new RuntimeException("Elemento non trovato.");
+		}
+
+		dipendenteInstance.setUtente(dipendenteDaModificare.getUtente());
+		dipendenteInstance.getUtente().setUsername(dipendenteInstance.getNome().toLowerCase().charAt(0) + "."
+				+ dipendenteInstance.getCognome().toLowerCase());
+		dipendenteInstance.setEmail(dipendenteInstance.getUtente().getUsername() + "@prova.it");
+
+		utenteRepository.save(dipendenteInstance.getUtente());
+		dipendenteRepository.save(dipendenteInstance);
+	}
+
+	@Override
 	@Transactional
 	public void inserisciNuovo(Dipendente dipendenteInstance) {
 		dipendenteRepository.save(dipendenteInstance);
 	}
 
+	@Override
 	@Transactional
 	public void rimuovi(Long idDipendente) {
 		dipendenteRepository.deleteById(idDipendente);
 	}
 
+	@Override
 	@Transactional
 	public List<Dipendente> findByExample(Dipendente example) {
 		Map<String, Object> paramaterMap = new HashMap<String, Object>();
@@ -128,7 +149,8 @@ public class DipendenteServiceImpl implements DipendenteService {
 		utenteInstance.setStato(StatoUtente.CREATO);
 		utenteInstance.setPassword(passwordEncoder.encode("Password@01"));
 		utenteInstance.setDateCreated(new Date());
-		utenteInstance.setUsername(dipendenteInstance.getNome().charAt(0) + "." + dipendenteInstance.getCognome());
+		utenteInstance.setUsername(dipendenteInstance.getNome().toLowerCase().charAt(0) + "."
+				+ dipendenteInstance.getCognome().toLowerCase());
 		utenteInstance.getRuoli()
 				.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Dipendente User", "ROLE_DIPENDENTE_USER"));
 
@@ -142,5 +164,11 @@ public class DipendenteServiceImpl implements DipendenteService {
 		dipendenteRepository.save(dipendenteInstance);
 		utenteRepository.save(utenteInstance);
 	}
-	
+
+	@Override
+	@Transactional
+	public Dipendente caricaSingoloElementoConUtente(Long id) {
+		return dipendenteRepository.findByIdConUtente(id).orElse(null);
+	}
+
 }

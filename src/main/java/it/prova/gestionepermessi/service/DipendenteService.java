@@ -9,9 +9,13 @@ public interface DipendenteService {
 	public List<Dipendente> listAllElements();
 
 	public Dipendente caricaSingoloElemento(Long id);
+	
+	public Dipendente caricaSingoloElementoConUtente(Long id);
 
 	public void aggiorna(Dipendente dipendenteInstance);
-
+	
+	public void aggiornaDipendente(Dipendente dipendenteInstance);
+	
 	public void inserisciNuovo(Dipendente dipendenteInstance);
 
 	public void rimuovi(Long idDipendente);

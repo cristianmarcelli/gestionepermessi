@@ -28,7 +28,7 @@ public class DipendenteController {
 
 	@Autowired
 	private DipendenteService dipendenteService;
-	
+
 	// ####################################
 	// ########### ADMIN ##################
 	// ####################################
@@ -119,6 +119,27 @@ public class DipendenteController {
 		}
 
 		dipendenteService.inserisciUtenteEDipendente(dipendenteDTO.buildDipendenteModel());
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/dipendente/list";
+	}
+
+	// Modifica dipendente
+	@GetMapping("/editDipendenteBackoffice/{idDipendente}")
+	public String editDipendente(@PathVariable(required = true) Long idDipendente, Model model) {
+		model.addAttribute("edit_dipendente_attr",
+				DipendenteDTO.buildDipendenteDTOFromModel(dipendenteService.caricaSingoloElemento(idDipendente)));
+		return "backoffice/dipendente/edit";
+	}
+
+	@PostMapping("/updateDipendenteBackoffice")
+	public String update(@Valid DipendenteDTO dipendenteDTO, BindingResult result, Model model,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "backoffice/dipendente/editDipendenteBackoffice";
+		}
+		dipendenteService.aggiornaDipendente(dipendenteDTO.buildDipendenteModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/dipendente/list";
