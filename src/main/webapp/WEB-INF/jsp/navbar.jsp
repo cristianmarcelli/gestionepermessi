@@ -45,8 +45,8 @@
            <li class="nav-item dropdown">
 	            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Gestione Permessi</a>
 	            <ul class="dropdown-menu" aria-labelledby="dropdown07">
-	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/list">Lista Richieste</a></li>
-	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Richieste</a></li>
+	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/listAllRichiesteBackoffice">Lista Richieste</a></li>
+	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/search">Ricerca Richieste</a></li>
 	            </ul> 
           </li>
           
@@ -62,10 +62,11 @@
 		   
 		   <sec:authorize access="hasRole('DIPENDENTE_USER')">
            <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utenti</a>
+		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Le tue richieste</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
-		        <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/list">Le tue richieste</a>
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/search">Ricerca le tue richieste</a>
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/listRichiestepermessoDipendente">Lista Richieste</a>
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/searchRichiestapermesso">Ricerca le tue Richieste</a>
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/insertRichiestapermesso">Richiedi permesso</a>
 		        </div>
 		      </li>
 		   </sec:authorize>

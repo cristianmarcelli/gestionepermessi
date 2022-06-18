@@ -68,6 +68,20 @@ public class RichiestaPermesso {
 		this.dataFine = dataFine;
 		this.dipendente = dipendente;
 	}
+	
+	
+
+	public RichiestaPermesso(Long id, Date dataInizio, Date dataFine, Boolean approvato,
+			String codiceCertificato, String note, TipoPermesso tipoPermesso) {
+		super();
+		this.id = id;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.approvato = approvato;
+		this.codiceCertificato = codiceCertificato;
+		this.note = note;
+		this.tipoPermesso = tipoPermesso;
+	}
 
 	public Long getId() {
 		return id;
@@ -131,6 +145,22 @@ public class RichiestaPermesso {
 
 	public void setDipendente(Dipendente dipendente) {
 		this.dipendente = dipendente;
+	}
+
+	public TipoPermesso getTipoPermesso() {
+		return tipoPermesso;
+	}
+
+	public void setTipoPermesso(TipoPermesso tipoPermesso) {
+		this.tipoPermesso = tipoPermesso;
+	}
+
+	public Boolean getApprovato() {
+		return approvato;
+	}
+
+	public void setApprovato(Boolean approvato) {
+		this.approvato = approvato;
 	}
 
 }
