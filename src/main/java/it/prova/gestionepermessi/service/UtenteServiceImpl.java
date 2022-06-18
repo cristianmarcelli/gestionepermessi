@@ -215,6 +215,7 @@ public class UtenteServiceImpl implements UtenteService {
 	@Transactional
 	public void resetPasswordService(Long idUtente) {
 		utenteRepository.resetPasswordRepository(idUtente, passwordEncoder.encode("Password@01"));
-	}
+		
+	} 
 
 }
