@@ -14,8 +14,6 @@
           </li>
 
            <sec:authorize access="hasRole('ADMIN')">
-           
-           
            <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utenti</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -31,8 +29,47 @@
 	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a></li>
 	            </ul> 
           </li>
-           
 		   </sec:authorize>
+		   
+		   
+		   <sec:authorize access="hasRole('BO_USER')">
+           <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Dipendenti</a>
+		        <div class="dropdown-menu" aria-labelledby="dropdown01">
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/listDipendentiBackoffice">Lista Dipendenti</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/insert">Inserisci Dipendente</a>
+		        </div>
+		      </li>
+           
+           <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Gestione Permessi</a>
+	            <ul class="dropdown-menu" aria-labelledby="dropdown07">
+	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/list">Lista Richieste</a></li>
+	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Richieste</a></li>
+	            </ul> 
+          </li>
+          
+          <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Gestione Messaggi</a>
+	            <ul class="dropdown-menu" aria-labelledby="dropdown07">
+	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/list">Lista Messaggi</a></li>
+	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Messaggi</a></li>
+	            </ul> 
+          </li>
+		   </sec:authorize>
+		   
+		   
+		   <sec:authorize access="hasRole('DIPENDENTE_USER')">
+           <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utenti</a>
+		        <div class="dropdown-menu" aria-labelledby="dropdown01">
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/list">Le tue richieste</a>
+		          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/search">Ricerca le tue richieste</a>
+		        </div>
+		      </li>
+		   </sec:authorize>
+		   
         </ul>
       </div>
       <sec:authorize access="isAuthenticated()">

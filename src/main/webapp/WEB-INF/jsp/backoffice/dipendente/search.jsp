@@ -28,7 +28,7 @@
 			    </div>
 			    <div class='card-body'>
 	
-						<form method="post" action="${pageContext.request.contextPath}/dipendente/listFindByExample" class="row g-3">
+						<form method="post" action="${pageContext.request.contextPath}/dipendente/listFindByExampleBackoffice" class="row g-3">
 						
 							<div class="col-md-6">
 								<label for="nome" class="form-label">Nome</label>

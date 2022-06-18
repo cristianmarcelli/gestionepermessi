@@ -18,4 +18,7 @@ public interface DipendenteService {
 
 	public List<Dipendente> findByExample(Dipendente example);
 	
+	//
+	public void inserisciUtenteEDipendente(Dipendente dipendenteInstance);
+
 }

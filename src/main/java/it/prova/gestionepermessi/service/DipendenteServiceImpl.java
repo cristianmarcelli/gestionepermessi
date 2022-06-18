@@ -1,6 +1,7 @@
 package it.prova.gestionepermessi.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionepermessi.model.Dipendente;
+import it.prova.gestionepermessi.model.StatoUtente;
+import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.repository.dipendente.DipendenteRepository;
+import it.prova.gestionepermessi.repository.utente.UtenteRepository;
 
 @Service
 public class DipendenteServiceImpl implements DipendenteService {
@@ -24,34 +28,40 @@ public class DipendenteServiceImpl implements DipendenteService {
 	private EntityManager entityManager;
 
 	@Autowired
-	private DipendenteRepository repository;
+	private DipendenteRepository dipendenteRepository;
+
+	@Autowired
+	private UtenteRepository utenteRepository;
+
+	@Autowired
+	private RuoloService ruoloServiceInstance;
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Dipendente> listAllElements() {
-		return (List<Dipendente>) repository.findAll();
+		return (List<Dipendente>) dipendenteRepository.findAll();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Dipendente caricaSingoloElemento(Long id) {
-		return repository.findById(id).orElse(null);
+		return dipendenteRepository.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void aggiorna(Dipendente dipendenteInstance) {
-		repository.save(dipendenteInstance);
+		dipendenteRepository.save(dipendenteInstance);
 	}
 
 	@Transactional
 	public void inserisciNuovo(Dipendente dipendenteInstance) {
-		repository.save(dipendenteInstance);
+		dipendenteRepository.save(dipendenteInstance);
 	}
 
 	@Transactional
 	public void rimuovi(Long idDipendente) {
-		repository.deleteById(idDipendente);
+		dipendenteRepository.deleteById(idDipendente);
 	}
 
 	@Transactional
@@ -99,6 +109,34 @@ public class DipendenteServiceImpl implements DipendenteService {
 		}
 
 		return typedQuery.getResultList();
+	}
+
+	@Override
+	@Transactional
+	public void inserisciUtenteEDipendente(Dipendente dipendenteInstance) {
+
+		Utente utenteInstance = new Utente();
+
+		// Comincio a fare logica di business sull'utente, così da inserire i dati
+		// appropriati una volta inserito il dipendente nel DB
+		// stato, username, password, ruolo - email
+
+		utenteInstance.setStato(StatoUtente.CREATO);
+		utenteInstance.setPassword("Password@01");
+		utenteInstance.setDateCreated(new Date());
+		utenteInstance.setUsername(dipendenteInstance.getNome().charAt(0) + "." + dipendenteInstance.getCognome());
+		utenteInstance.getRuoli()
+				.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Dipendente User", "ROLE_DIPENDENTE_USER"));
+
+		dipendenteInstance.setDataDimissioni(null);
+		dipendenteInstance.setEmail(utenteInstance.getUsername() + "@prova.it");
+
+		//Setto l'utente al dipendente e viceversa
+		utenteInstance.setDipendente(dipendenteInstance);
+		dipendenteInstance.setUtente(utenteInstance);
+
+		dipendenteRepository.save(dipendenteInstance);
+		utenteRepository.save(utenteInstance);
 	}
 
 }

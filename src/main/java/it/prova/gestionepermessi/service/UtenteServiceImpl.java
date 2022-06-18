@@ -38,9 +38,6 @@ public class UtenteServiceImpl implements UtenteService {
 //	private DipendenteService dipendenteService;
 
 	@Autowired
-	private UtenteRepository repository;
-
-	@Autowired
 	private UtenteRepository utenteRepository;
 
 	@Autowired
@@ -171,7 +168,7 @@ public class UtenteServiceImpl implements UtenteService {
 		else
 			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-		return repository.findAll(specificationCriteria, paging);
+		return utenteRepository.findAll(specificationCriteria, paging);
 	}
 
 	@Transactional(readOnly = true)
@@ -217,7 +214,7 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Transactional
 	public void resetPasswordService(Long idUtente) {
-		repository.resetPasswordRepository(idUtente, passwordEncoder.encode("Password@01"));
+		utenteRepository.resetPasswordRepository(idUtente, passwordEncoder.encode("Password@01"));
 	}
 
 }
