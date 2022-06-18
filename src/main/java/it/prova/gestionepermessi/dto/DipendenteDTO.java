@@ -24,7 +24,7 @@ public class DipendenteDTO {
 	@NotBlank
 	@Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String codFis;
-	@NotBlank(message = "{email.notblank}")
+
 	private String email;
 	@NotNull(message = "{dataNascita.notnull}")
 	private Date dataNascita;
@@ -35,9 +35,9 @@ public class DipendenteDTO {
 
 	private Long[] richiestePermessiIds;
 
-	@NotNull(message = "{dataAssunzione.notnull}")
+	@NotNull(message = "{sesso.notnull}")
 	private Sesso sesso;
-	@NotNull(message = "{utente.notnull}")
+
 	private UtenteDTO utenteDTO;
 
 	public DipendenteDTO() {
@@ -48,15 +48,50 @@ public class DipendenteDTO {
 		this.id = id;
 	}
 
+	public DipendenteDTO(Long id, @NotBlank(message = "{nome.notblank}") String nome,
+			@NotBlank(message = "{cognome.notblank}") String cognome,
+			@NotBlank(message = "{codiceFiscale.notblank}") String codiceFiscale, String email,
+			@NotNull(message = "{dataDiNascita.notnull}") Date dataNascita, Date dataAssunzione, Date dataDimissioni) {
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codFis = codiceFiscale;
+		this.email = email;
+		this.dataNascita = dataNascita;
+		this.dataAssunzione = dataAssunzione;
+		this.dataDimissioni = dataDimissioni;
+	}
+
+	public DipendenteDTO(Long id, @NotBlank(message = "{nome.notblank}") String nome,
+			@NotBlank(message = "{cognome.notblank}") String cognome,
+			@NotBlank(message = "{codiceFiscale.notblank}") @Size(min = 16, max = 16, message = "Errore, la lunghezza del codice fiscale deve essere di 16 caratteri!") String codFis,
+			String email, @NotNull(message = "{dataDiNascita.notnull}") Date dataNascita, Date dataAssunzione,
+			@NotNull(message = "{sesso.notblanck}") Sesso sesso) {
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codFis = codFis;
+		this.email = email;
+		this.dataNascita = dataNascita;
+		this.dataAssunzione = dataAssunzione;
+		this.sesso = sesso;
+	}
+
+	public DipendenteDTO(Long id, @NotBlank(message = "{nome.notblank}") String nome,
+			@NotBlank(message = "{cognome.notblank}") String cognome,
+			@NotBlank(message = "{codiceFiscale.notblank}") String codFis) {
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codFis = codFis;
+	}
+
 	public DipendenteDTO(Long id,
 			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String nome,
 			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String cognome,
 			@NotBlank @Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String codFis,
-			@NotBlank(message = "{email.notblank}") String email,
-			@NotNull(message = "{dataNascita.notnull}") Date dataNascita,
-			@NotNull(message = "{dataAssunzione.notnull}") Date dataAssunzione, Date dataDimissioni,
-			Long[] richiestePermessi, @NotNull(message = "{dataAssunzione.notnull}") Sesso sesso,
-			@NotNull(message = "{utente.notnull}") UtenteDTO utenteDTO) {
+			String email, @NotNull(message = "{dataNascita.notnull}") Date dataNascita, Date dataAssunzione,
+			Date dataDimissioni, @NotNull(message = "{sesso.notnull}") Sesso sesso) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -67,65 +102,6 @@ public class DipendenteDTO {
 		this.dataAssunzione = dataAssunzione;
 		this.dataDimissioni = dataDimissioni;
 		this.sesso = sesso;
-		this.utenteDTO = utenteDTO;
-	}
-
-	public DipendenteDTO(
-			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String nome,
-			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String cognome,
-			@NotBlank @Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String codFis,
-			@NotBlank(message = "{email.notblank}") String email,
-			@NotNull(message = "{dataNascita.notnull}") Date dataNascita,
-			@NotNull(message = "{dataAssunzione.notnull}") Sesso sesso) {
-		super();
-		this.nome = nome;
-		this.cognome = cognome;
-		this.codFis = codFis;
-		this.email = email;
-		this.dataNascita = dataNascita;
-		this.sesso = sesso;
-	}
-
-	public DipendenteDTO(Long id,
-			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String nome,
-			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String cognome,
-			@NotBlank @Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String codFis,
-			@NotBlank(message = "{email.notblank}") String email,
-			@NotNull(message = "{dataNascita.notnull}") Date dataNascita,
-			@NotNull(message = "{dataAssunzione.notnull}") Date dataAssunzione, Date dataDimissioni,
-			@NotNull(message = "{dataAssunzione.notnull}") Sesso sesso) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.codFis = codFis;
-		this.email = email;
-		this.dataNascita = dataNascita;
-		this.dataAssunzione = dataAssunzione;
-		this.dataDimissioni = dataDimissioni;
-		this.sesso = sesso;
-	}
-
-	public DipendenteDTO(Long id,
-			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String nome,
-			@NotBlank @Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String cognome,
-			@NotBlank @Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String codFis,
-			@NotBlank(message = "{email.notblank}") String email,
-			@NotNull(message = "{dataNascita.notnull}") Date dataNascita,
-			@NotNull(message = "{dataAssunzione.notnull}") Date dataAssunzione, Date dataDimissioni,
-			@NotNull(message = "{dataAssunzione.notnull}") Sesso sesso,
-			@NotNull(message = "{utente.notnull}") UtenteDTO utenteDTO) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.codFis = codFis;
-		this.email = email;
-		this.dataNascita = dataNascita;
-		this.dataAssunzione = dataAssunzione;
-		this.dataDimissioni = dataDimissioni;
-		this.sesso = sesso;
-		this.utenteDTO = utenteDTO;
 	}
 
 	public Long getId() {

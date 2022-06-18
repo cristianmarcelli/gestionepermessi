@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,7 +46,7 @@ public class Dipendente {
 	@Enumerated(EnumType.STRING)
 	private Sesso sesso;
 
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.LAZY, optional = false, cascade=CascadeType.ALL)
 	@JoinColumn(name = "utente_id", referencedColumnName = "id")
 	private Utente utente;
 

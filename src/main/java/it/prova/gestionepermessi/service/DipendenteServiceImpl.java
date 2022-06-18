@@ -32,10 +32,10 @@ public class DipendenteServiceImpl implements DipendenteService {
 
 	@Autowired
 	private UtenteRepository utenteRepository;
-
+	
 	@Autowired
 	private RuoloService ruoloServiceInstance;
-
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Dipendente> listAllElements() {
@@ -131,12 +131,12 @@ public class DipendenteServiceImpl implements DipendenteService {
 		dipendenteInstance.setDataDimissioni(null);
 		dipendenteInstance.setEmail(utenteInstance.getUsername() + "@prova.it");
 
-		//Setto l'utente al dipendente e viceversa
+		// Setto l'utente al dipendente e viceversa
 		utenteInstance.setDipendente(dipendenteInstance);
 		dipendenteInstance.setUtente(utenteInstance);
 
 		dipendenteRepository.save(dipendenteInstance);
 		utenteRepository.save(utenteInstance);
 	}
-
+	
 }

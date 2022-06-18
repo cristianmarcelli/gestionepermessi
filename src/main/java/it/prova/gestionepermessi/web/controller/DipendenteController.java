@@ -109,19 +109,17 @@ public class DipendenteController {
 		model.addAttribute("insert_dipendente_attr", new DipendenteDTO());
 		return "backoffice/dipendente/insert";
 	}
-	
+
 	@PostMapping("/save")
-	public String saveDipendente(@Valid @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO, BindingResult result,
-			RedirectAttributes redirectAttrs, HttpServletRequest request) {
-		
-		
-		
+	public String saveDipendente(@Valid @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
+			BindingResult result, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
 		if (result.hasErrors()) {
 			return "backoffice/dipendente/insert";
 		}
-		
+
 		dipendenteService.inserisciUtenteEDipendente(dipendenteDTO.buildDipendenteModel());
-		
+
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/dipendente/list";
 	}
