@@ -52,6 +52,31 @@
 					  <dd class="col-sm-9">${show_richiestapermesso_attr.approvato?'APPROVATO':'NON APPROVATO' }</dd>
 			    	</dl>
 			    	
+			    	<!-- info Regista -->
+			    	<p>
+					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					    Info Dipendente
+					  </a>
+					</p>
+					<div class="collapse" id="collapseExample">
+					  <div class="card card-body">
+					  	<dl class="row">
+						  <dt class="col-sm-3 text-right">Id:</dt>
+						  <dd class="col-sm-9">${show_richiestapermesso_attr.dipendente.id}</dd>
+					   	</dl>
+					   	<dl class="row">
+						  <dt class="col-sm-3 text-right">Nome:</dt>
+						  <dd class="col-sm-9">${show_richiestapermesso_attr.dipendente.nome}</dd>
+					   	</dl>
+					   	<dl class="row">
+						  <dt class="col-sm-3 text-right">Cognome:</dt>
+						  <dd class="col-sm-9">${show_richiestapermesso_attr.dipendente.cognome}</dd>
+					   	</dl>
+					    
+					  </div>
+					<!-- end info Richiesta permesso -->
+					</div>
+			    	
 			    <!-- end card body -->
 			    </div>
 			    
