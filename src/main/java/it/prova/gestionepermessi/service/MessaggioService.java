@@ -15,4 +15,6 @@ public interface MessaggioService {
 
 	public Messaggio findByRichiesta(Long idRichiesta);
 
+	public Messaggio caricaSingoloMessaggio(Long idMessaggio);
+
 }

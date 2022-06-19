@@ -67,4 +67,9 @@ public class MessaggioServiceImpl implements MessaggioService {
 		return messaggioRepository.findByRichiestaPermesso_Id(idRichiesta);
 	}
 
+	@Override
+	public Messaggio caricaSingoloMessaggio(Long idMessaggio) {
+		return messaggioRepository.findById(idMessaggio).orElse(null);
+	}
+
 }
