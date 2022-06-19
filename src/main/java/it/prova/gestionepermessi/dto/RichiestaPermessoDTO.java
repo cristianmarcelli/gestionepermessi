@@ -6,7 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
-import it.prova.gestionepermessi.model.Attachment;
+import org.springframework.web.multipart.MultipartFile;
+
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.TipoPermesso;
 
@@ -19,7 +20,7 @@ public class RichiestaPermessoDTO {
 
 	private Date dataFine;
 
-	private Boolean approvato;
+	private boolean approvato;
 
 	private String codiceCertificato;
 
@@ -28,7 +29,9 @@ public class RichiestaPermessoDTO {
 	@NotNull(message = "{tipoPermesso.notnull}")
 	private TipoPermesso tipoPermesso;
 
-	private Attachment attachment;
+	private MultipartFile attachment;
+
+	private boolean giornoSingolo;
 
 	private DipendenteDTO dipendenteDTO;
 
@@ -36,8 +39,11 @@ public class RichiestaPermessoDTO {
 
 	}
 
-	public RichiestaPermessoDTO(Long id, Date dataInizio, Date dataFine, Boolean approvato, String codiceCertificato,
-			String note, TipoPermesso tipoPermesso) {
+	public RichiestaPermessoDTO(Long id, @NotNull(message = "{dataInizio.notnull}") Date dataInizio, Date dataFine,
+			boolean approvato, String codiceCertificato, String note,
+			@NotNull(message = "{tipoPermesso.notnull}") TipoPermesso tipoPermesso, MultipartFile attachment,
+			boolean giornoSingolo, DipendenteDTO dipendenteDTO) {
+		super();
 		this.id = id;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
@@ -45,11 +51,14 @@ public class RichiestaPermessoDTO {
 		this.codiceCertificato = codiceCertificato;
 		this.note = note;
 		this.tipoPermesso = tipoPermesso;
+		this.attachment = attachment;
+		this.giornoSingolo = giornoSingolo;
+		this.dipendenteDTO = dipendenteDTO;
 	}
 
 	public RichiestaPermessoDTO(Long id, @NotNull(message = "{dataInizio.notnull}") Date dataInizio, Date dataFine,
-			Boolean approvato, String codiceCertificato, String note,
-			@NotNull(message = "{tipoPermesso.notnull}") TipoPermesso tipoPermesso, Attachment attachment,
+			boolean approvato, String codiceCertificato, String note,
+			@NotNull(message = "{tipoPermesso.notnull}") TipoPermesso tipoPermesso, MultipartFile attachment,
 			DipendenteDTO dipendenteDTO) {
 		super();
 		this.id = id;
@@ -61,6 +70,19 @@ public class RichiestaPermessoDTO {
 		this.tipoPermesso = tipoPermesso;
 		this.attachment = attachment;
 		this.dipendenteDTO = dipendenteDTO;
+	}
+
+	public RichiestaPermessoDTO(Long id, @NotNull(message = "{dataInizio.notnull}") Date dataInizio, Date dataFine,
+			boolean approvato, String codiceCertificato, String note,
+			@NotNull(message = "{tipoPermesso.notnull}") TipoPermesso tipoPermesso) {
+		super();
+		this.id = id;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.approvato = approvato;
+		this.codiceCertificato = codiceCertificato;
+		this.note = note;
+		this.tipoPermesso = tipoPermesso;
 	}
 
 	public Long getId() {
@@ -111,20 +133,28 @@ public class RichiestaPermessoDTO {
 		this.tipoPermesso = tipoPermesso;
 	}
 
-	public Attachment getAttachment() {
+	public MultipartFile getAttachment() {
 		return attachment;
 	}
 
-	public void setAttachment(Attachment attachment) {
+	public void setAttachment(MultipartFile attachment) {
 		this.attachment = attachment;
 	}
 
-	public Boolean getApprovato() {
+	public boolean getApprovato() {
 		return approvato;
 	}
 
-	public void setApprovato(Boolean approvato) {
+	public void setApprovato(boolean approvato) {
 		this.approvato = approvato;
+	}
+
+	public boolean getGiornoSingolo() {
+		return giornoSingolo;
+	}
+
+	public void setGiornoSingolo(boolean giornoSingolo) {
+		this.giornoSingolo = giornoSingolo;
 	}
 
 	public DipendenteDTO getDipendenteDTO() {
@@ -147,7 +177,8 @@ public class RichiestaPermessoDTO {
 				richiestaPermessoModel.getTipoPermesso());
 	}
 
-	public static List<RichiestaPermessoDTO> createRichiestaPermessoDTOListFromModelList(List<RichiestaPermesso> richieste) {
+	public static List<RichiestaPermessoDTO> createRichiestaPermessoDTOListFromModelList(
+			List<RichiestaPermesso> richieste) {
 		return richieste.stream().map(richiesta -> RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiesta))
 				.collect(Collectors.toList());
 	}

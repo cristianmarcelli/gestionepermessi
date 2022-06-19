@@ -1,5 +1,7 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -25,31 +27,36 @@
 			
 			<div class='card'>
 			    <div class='card-header'>
-			        <h5>Lista dei risultati</h5> 
+			        <h5>Lista delle richieste permessi</h5> 
 			    </div>
-			    <div class='card-body'>
+			    		<div class='card-body'>
 			    
 			        <div class='table-responsive'>
 			            <table class='table table-striped ' >
 			                <thead>
 			                    <tr>
+			                    	<th>Id</th>			                        
 			                        <th>Tipo Permesso</th>
-			                        <th>Data Inizio</th>
-			                        <th>Data Fine</th>
-			                        <th>Approvato</th>
+			                        <th>Codice Certificato</th>
+			                        <th>Data di Inizio</th>
+			                        <th>Data di Fine</th>
+			                        <th>Stato</th>
 			                        <th>Azioni</th>
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	<c:forEach items="${richiestepermesso_list_attribute }" var="richiesteItem">
+			                	<c:forEach items="${richiestapermesso_dipendente_list_attribute }" var="richiestaPermessoItem">
 									<tr>
-										<td>${richiesteItem.tipoPermesso }</td>
-										<td>${richiesteItem.dataInizio }</td>
-										<td>${richiesteItem.dataFine }</td>
-										<td>${richiesteItem.approvato }</td>
+										<td>${richiestaPermessoItem.id }</td>
+										<td>${richiestaPermessoItem.tipoPermesso }</td>
+										<td>${richiestaPermessoItem.codiceCertificato }</td>
+										<td><fmt:formatDate type="date" value = "${richiestaPermessoItem.dataInizio}" /></td>
+										<td><fmt:formatDate type="date" value = "${richiestaPermessoItem.dataFine}" /></td>
+										<td>${richiestaPermessoItem.approvato?'APPROVATO':'NON APPROVATO' }</td>
 										<td>
-											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dipendente/showDipendenteBackoffice/${richiesteItem.id }">Visualizza</a>
-											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/dipendente/editDipendenteBackoffice/${richiesteItem.id }">Edit</a>
+											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dipendente/showRichiestaPermesso${richiestaPermessoItem.id}">Visualizza</a>
+											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dipendente/editRichiestaPermesso${richiestaPermessoItem.id}">Edit</a>
+											<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/dipendente/deleteRichiestaPermesso${richiestaPermessoItem.id}">Delete</a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -57,9 +64,7 @@
 			            </table>
 			        </div>
 			        
-			        <a href="${pageContext.request.contextPath}/home" class='btn btn-outline-secondary' >
-				            <i class='fa fa-chevron-left'></i> Torna alla Home
-				        </a>
+			        <a class="btn btn-primary " href="${pageContext.request.contextPath}/richiestapermesso/insertRichiestapermesso">Add New</a>
 			   
 				<!-- end card-body -->			   
 			    </div>
@@ -69,7 +74,6 @@
 	<!-- end container -->	
 	</main>
 	<jsp:include page="../../footer.jsp" />
-	
 	
 </body>
 </html>

@@ -171,4 +171,10 @@ public class DipendenteServiceImpl implements DipendenteService {
 		return dipendenteRepository.findByIdConUtente(id).orElse(null);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Dipendente cercaPerUsername(String username) {
+		return dipendenteRepository.findByUsername(username).orElse(null);
+	}
+
 }

@@ -2,6 +2,8 @@ package it.prova.gestionepermessi.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 
 public interface RichiestaPermessoService {
@@ -10,14 +12,14 @@ public interface RichiestaPermessoService {
 
 	public RichiestaPermesso caricaSingoloElemento(Long id);
 
-	public void aggiorna(RichiestaPermesso dipendenteInstance);
+	public void aggiorna(RichiestaPermesso richiestaPermessoInstance);
 
-	public void aggiornaDipendente(RichiestaPermesso dipendenteInstance);
+	public void inserisciNuovo(RichiestaPermesso richiestaPermessoInstance, boolean giornoUnico, MultipartFile file);
 
-	public void inserisciNuovo(RichiestaPermesso dipendenteInstance);
-
-	public void rimuovi(Long idDipendente);
+	public void rimuovi(Long idRichiestaPermesso);
 
 	public List<RichiestaPermesso> findByExample(RichiestaPermesso example);
+
+	public List<RichiestaPermesso> listAllRichiestePermessiPerIdDipendente(Long id);
 
 }

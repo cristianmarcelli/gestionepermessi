@@ -129,6 +129,7 @@ public class DipendenteController {
 	public String editDipendente(@PathVariable(required = true) Long idDipendente, Model model) {
 		model.addAttribute("edit_dipendente_attr",
 				DipendenteDTO.buildDipendenteDTOFromModel(dipendenteService.caricaSingoloElemento(idDipendente)));
+		
 		return "backoffice/dipendente/edit";
 	}
 
@@ -139,6 +140,7 @@ public class DipendenteController {
 		if (result.hasErrors()) {
 			return "backoffice/dipendente/editDipendenteBackoffice";
 		}
+		
 		dipendenteService.aggiornaDipendente(dipendenteDTO.buildDipendenteModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");

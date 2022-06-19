@@ -47,6 +47,9 @@ public class RichiestaPermesso {
 	@JoinColumn(name = "dipendente_id", referencedColumnName = "id", nullable = false)
 	private Dipendente dipendente;
 
+	public RichiestaPermesso() {
+	}
+
 	public RichiestaPermesso(Long id, TipoPermesso tipoPermesso, Date dataInizio, Date dataFine, boolean approvato,
 			String codiceCertificato, String note, Attachment attachment, Dipendente dipendente) {
 		super();
@@ -68,11 +71,9 @@ public class RichiestaPermesso {
 		this.dataFine = dataFine;
 		this.dipendente = dipendente;
 	}
-	
-	
 
-	public RichiestaPermesso(Long id, Date dataInizio, Date dataFine, Boolean approvato,
-			String codiceCertificato, String note, TipoPermesso tipoPermesso) {
+	public RichiestaPermesso(Long id, Date dataInizio, Date dataFine, Boolean approvato, String codiceCertificato,
+			String note, TipoPermesso tipoPermesso) {
 		super();
 		this.id = id;
 		this.dataInizio = dataInizio;

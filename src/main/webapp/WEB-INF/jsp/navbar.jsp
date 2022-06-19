@@ -64,7 +64,7 @@
            <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Le tue richieste</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
-		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/listRichiestepermessoDipendente">Lista Richieste</a>
+		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/listRichiestaPermesso">Lista Richieste</a>
 		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/searchRichiestapermesso">Ricerca le tue Richieste</a>
 		        <a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/insertRichiestapermesso">Richiedi permesso</a>
 		        </div>

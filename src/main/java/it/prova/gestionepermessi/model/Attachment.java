@@ -32,8 +32,7 @@ public class Attachment {
 		this.contentType = contentType;
 	}
 
-	public Attachment(Long id, String nomeFile, String contentType, byte[] payload,
-			RichiestaPermesso richiestaPermesso) {
+	public Attachment(Long id, String nomeFile, String contentType, byte[] payload) {
 		super();
 		this.id = id;
 		this.nomeFile = nomeFile;
