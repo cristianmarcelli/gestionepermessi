@@ -49,7 +49,7 @@
 			    	
 			    	<dl class="row">
 					  <dt class="col-sm-3 text-right">Stato:</dt>
-					  <dd class="col-sm-9">${richiestaPermessoItem.approvato?'APPROVATO':'NON APPROVATO' }</dd>
+					  <dd class="col-sm-9">${show_richiestapermesso_attr.approvato?'APPROVATO':'NON APPROVATO' }</dd>
 			    	</dl>
 			    	
 			    <!-- end card body -->

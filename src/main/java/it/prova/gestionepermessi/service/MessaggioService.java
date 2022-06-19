@@ -8,16 +8,14 @@ import it.prova.gestionepermessi.model.RichiestaPermesso;
 
 public interface MessaggioService {
 
-	public List<Messaggio> listAllElements();
-
-	public Dipendente caricaSingoloElemento(Long id);
-	
 	public void aggiorna(Messaggio messaggioInstance);
-	
+
 	public void inserisciNuovo(Messaggio messaggioInstance, RichiestaPermesso richiestaInstance);
 
 	public void rimuovi(Long idMessaggio);
 
 	public List<Dipendente> findByExample(Messaggio example);
-	
+
+	public Messaggio findByRichiesta(Long idRichiesta);
+
 }

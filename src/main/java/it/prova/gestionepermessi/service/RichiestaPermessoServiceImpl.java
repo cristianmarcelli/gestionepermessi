@@ -72,6 +72,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Override
 	@Transactional
 	public void rimuovi(Long idRichiestaPermesso) {
+		richiestaPermessoRepository.deleteById(idRichiestaPermesso);
 	}
 
 	@Override

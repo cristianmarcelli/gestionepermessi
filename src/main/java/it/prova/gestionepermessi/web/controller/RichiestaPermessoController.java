@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
 import it.prova.gestionepermessi.model.Dipendente;
+import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.service.AttachmentService;
 import it.prova.gestionepermessi.service.DipendenteService;
+import it.prova.gestionepermessi.service.MessaggioService;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
 
 @Controller
@@ -33,6 +37,9 @@ public class RichiestaPermessoController {
 
 	@Autowired
 	private DipendenteService dipendenteService;
+
+	@Autowired
+	private MessaggioService messaggioService;
 
 	// lista richiestepermesso
 	@GetMapping("listAllRichiesteBackoffice")
@@ -105,6 +112,30 @@ public class RichiestaPermessoController {
 		model.addAttribute("show_richiestapermesso_attr",
 				richiestaPermessoService.caricaSingoloElemento(idRichiestaPermesso));
 		return "dipendente/richiestapermesso/show";
+	}
+
+	// deleteRichiestaPermesso
+	@GetMapping("/deleteRichiestaPermesso/{idRichiestapermesso}")
+	public String deleteRichiestaPermesso(@PathVariable(required = true) Long idRichiestapermesso, Model model) {
+		model.addAttribute("delete_richiestapermesso_attr",
+				richiestaPermessoService.caricaSingoloElemento(idRichiestapermesso));
+
+		return "dipendente/richiestapermesso/delete";
+	}
+
+	@PostMapping("/removeRichiestaPermesso")
+	public String remove(@RequestParam(required = true) Long idRichiestapermesso, RedirectAttributes redirectAttrs) {
+
+		Messaggio messaggioItem = messaggioService.findByRichiesta(idRichiestapermesso);
+		
+		if (messaggioItem != null) {
+			messaggioService.rimuovi(messaggioItem.getId());
+		}
+
+		richiestaPermessoService.rimuovi(idRichiestapermesso);
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:listRichiestaPermesso";
 	}
 
 }
