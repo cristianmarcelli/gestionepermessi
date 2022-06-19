@@ -79,6 +79,16 @@ public class Messaggio {
 		this.oggetto = oggetto;
 	}
 
+	public Messaggio(Long id, String testo, String oggetto, Boolean letto, Date dataInserimento, Date dataLettura) {
+		super();
+		this.id = id;
+		this.testo = testo;
+		this.oggetto = oggetto;
+		this.letto = letto;
+		this.dataInserimento = dataInserimento;
+		this.dataLettura = dataLettura;
+	}
+
 	public Long getId() {
 		return id;
 	}

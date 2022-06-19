@@ -15,4 +15,6 @@ public interface RichiestaPermessoRepository extends CrudRepository<RichiestaPer
 
 	Page<RichiestaPermesso> findAll(Specification<RichiestaPermesso> specificationCriteria, Pageable paging);
 
+	RichiestaPermesso findByAttachment_id(Long id);
+
 }

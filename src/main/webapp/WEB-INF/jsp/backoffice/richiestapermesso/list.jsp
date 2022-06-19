@@ -20,7 +20,7 @@
 			</div>
 			<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
 			  ${errorMessage}
-			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+			  <button type="button"  class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 			</div>
 			
 			<div class='card'>
@@ -34,24 +34,26 @@
 			                <thead>
 			                    <tr>
 			                        <th>Tipo Permesso</th>
+			                        <th>Codice Certificato</th>
 			                        <th>Data Inizio</th>
 			                        <th>Data Fine</th>
-			                        <th>Approvato</th>
+			                        <th>Stato</th>
 			                        <th>Azioni</th>
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	<c:forEach items="${richiestepermesso_list_attribute }" var="richiesteItem">
+			                	<c:forEach items="${richiestepermesso_list_attribute }" var="richiestaItem">
 									<tr>
-										<td>${richiesteItem.tipoPermesso }</td>
-										<td>${richiesteItem.dataInizio }</td>
-										<td>${richiesteItem.dataFine }</td>
-										<td>${richiesteItem.approvato }</td>
+										<td>${richiestaItem.tipoPermesso }</td>
+										<td>${richiestaItem.codiceCertificato }</td>
+										<td>${richiestaItem.dataInizio }</td>
+										<td>${richiestaItem.dataFine }</td>
+										<td>${richiestaItem.approvato?'APPROVATO':'NON APPROVATO' }</td>
 										<td>
-											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/dipendente/showDipendenteBackoffice/${richiesteItem.id }">Visualizza</a>
+											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richiestapermesso/showRichiestaPermessoBackoffice/${richiestaItem.id }">Visualizza</a>
 										
-											<c:if test="${richiesteItem.getApprovato() == false}">
-												<a id="approvaLink_#_${richiesteItem.id }" class="btn btn-outline-primary btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >Approva </a>
+											<c:if test="${richiestaItem.isApprovato() == false}">
+												<a id="approvaLink_#_${richiestaItem.id }" class="btn btn-outline-${richiestaItem.isApprovato()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal"  data-utenteId="${richiestaItem.id }" data-bs-target="#confirmOperationModal"  >${richiestaItem.isApprovato()?'Nega':'Approva'}</a>
 											</c:if>
 										
 										</td>
@@ -86,11 +88,11 @@
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
-	                Continuare con l'operazione?
+	                Continuare con l'operazione?????
 	            </div>
-	            <form method="post" action="${pageContext.request.contextPath}/richiestapermesso/approva" >
+	            <form method="post" action="${pageContext.request.contextPath}/richiestapermesso/approvaRichiesta" >
 		            <div class="modal-footer">
-		            	<input type="hidden" name="idRichiestaForApprova" id="idRichiestaForApprova">
+		            	<input type="hidden" name="idRichiestaForApprovaRichiesta" id="idRichiestaForApprovaRichiesta">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
 		                <input type="submit" value="Continua"  class="btn btn-primary">
 		            </div>
@@ -99,13 +101,14 @@
 	    </div>
 	</div>
 	<!-- end Modal -->
+	
 	<script type="text/javascript">
 		<!-- aggancio evento click al conferma del modal  -->
 		$(".link-for-modal").click(function(){
 			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
-			var callerId = $(this).attr('id').substring(18);
+			var callerId = $(this).attr('id').substring(20);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idRichiestaForApprova').val(callerId);
+			$('#idRichiestaForApprovaRichiesta').val(callerId);
 		});
 	</script>
 	

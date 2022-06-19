@@ -14,7 +14,7 @@ public interface RichiestaPermessoService {
 
 	public RichiestaPermesso caricaSingoloElemento(Long id);
 
-	public void aggiorna(RichiestaPermesso richiestaPermessoInstance);
+	public void aggiorna(Long idRichiestapermesso, MultipartFile file);
 
 	public void inserisciNuovo(RichiestaPermesso richiestaPermessoInstance, boolean giornoUnico, MultipartFile file);
 
@@ -25,10 +25,8 @@ public interface RichiestaPermessoService {
 
 	public List<RichiestaPermesso> listAllRichiestePermessiPerIdDipendente(Long id);
 
-	// ###########################
-	public void aggiornaProva(RichiestaPermesso richiestaPermessoInstance, boolean giornoSingolo, MultipartFile file);
-	// ###########################
-
 	public void approvaRichiesta(Long idRichiestaPermesso);
 
+	RichiestaPermesso caricaSingolaRichiestaConAttachment(Long id);
+	
 }

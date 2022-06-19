@@ -46,15 +46,15 @@
 	            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Gestione Permessi</a>
 	            <ul class="dropdown-menu" aria-labelledby="dropdown07">
 	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/listAllRichiesteBackoffice">Lista Richieste</a></li>
-	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/search">Ricerca Richieste</a></li>
+	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/richiestapermesso/searchRichiesteBackoffice">Ricerca Richieste</a></li>
 	            </ul> 
           </li>
           
           <li class="nav-item dropdown">
 	            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Gestione Messaggi</a>
 	            <ul class="dropdown-menu" aria-labelledby="dropdown07">
-	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/list">Lista Messaggi</a></li>
-	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Messaggi</a></li>
+	            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/messaggio/list">Lista Messaggi</a></li>
+	              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/messaggio/search">Ricerca Messaggi</a></li>
 	            </ul> 
           </li>
 		   </sec:authorize>

@@ -50,39 +50,32 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		return richiestaPermessoRepository.findById(id).orElse(null);
 	}
 
-	@Override
-	@Transactional
-	public void aggiorna(RichiestaPermesso richiestaPermessoInstance) {
-
-		// ########################
-
-		richiestaPermessoRepository.save(richiestaPermessoInstance);
-	}
+//	@Override
+//	@Transactional
+//	public void aggiorna(RichiestaPermesso richiestaPermessoInstance) {
+//		richiestaPermessoRepository.save(richiestaPermessoInstance);
+//	}
 
 	@Override
-	@Transactional
-	public void aggiornaProva(RichiestaPermesso richiestaPermessoInstance, boolean giornoSingolo, MultipartFile file) {
-
-		if (giornoSingolo) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(richiestaPermessoInstance.getDataInizio());
-			calendar.add(Calendar.HOUR, 24);
-			richiestaPermessoInstance.setDataFine(calendar.getTime());
-		}
-
-		richiestaPermessoRepository.save(richiestaPermessoInstance);
+	public void aggiorna(Long idRichiestapermesso, MultipartFile file) {
+		RichiestaPermesso richiestaPermessoReloaded = richiestaPermessoRepository
+				.findByAttachment_id(idRichiestapermesso);
 		if (file != null) {
-			Attachment newfile = new Attachment();
-			newfile.setNomeFile(file.getOriginalFilename());
-			newfile.setContentType(file.getContentType());
+			Attachment attachment = new Attachment();
+			attachment.setNomeFile(file.getOriginalFilename());
+			attachment.setContentType(file.getContentType());
 			try {
-				newfile.setPayload(file.getBytes());
+				attachment.setPayload(file.getBytes());
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			attachmentRepository.save(newfile);
+			attachmentRepository.save(attachment);
+			richiestaPermessoReloaded.setAttachment(attachment);
+			richiestaPermessoRepository.save(richiestaPermessoReloaded);
+			return;
 		}
-		messaggioService.inserisciNuovo(new Messaggio(), richiestaPermessoInstance);
+		richiestaPermessoRepository.save(richiestaPermessoReloaded);
 	}
 
 	@Override
@@ -145,7 +138,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		};
 
 		Pageable paging = null;
-		// se non passo parametri di paginazione non ne tengo conto
+
 		if (pageSize == null || pageSize < 10)
 			paging = Pageable.unpaged();
 		else
@@ -163,12 +156,18 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Override
 	@Transactional
 	public void approvaRichiesta(Long idRichiestaPermesso) {
-		RichiestaPermesso richiestaInstance = new RichiestaPermesso();
+		RichiestaPermesso richiestaInstance = caricaSingoloElemento(idRichiestaPermesso);
 
-		richiestaInstance.setId(idRichiestaPermesso);
+		if (richiestaInstance.isApprovato() == false) {
+			richiestaInstance.setApprovato(true);
+		}
 
-		richiestaInstance.setApprovato(true);
+	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public RichiestaPermesso caricaSingolaRichiestaConAttachment(Long id) {
+		return richiestaPermessoRepository.findByAttachment_id(id);
 	}
 
 }

@@ -84,6 +84,31 @@ public class RichiestaPermesso {
 		this.tipoPermesso = tipoPermesso;
 	}
 
+	public RichiestaPermesso(Long id, TipoPermesso tipoPermesso, Date dataInizio, Date dataFine, boolean approvato,
+			String codiceCertificato, String note) {
+		super();
+		this.id = id;
+		this.tipoPermesso = tipoPermesso;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.approvato = approvato;
+		this.codiceCertificato = codiceCertificato;
+		this.note = note;
+	}
+
+	public RichiestaPermesso(Long id, TipoPermesso tipoPermesso, Date dataInizio, Date dataFine, boolean approvato,
+			String codiceCertificato, String note, Attachment attachment) {
+		super();
+		this.id = id;
+		this.tipoPermesso = tipoPermesso;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.approvato = approvato;
+		this.codiceCertificato = codiceCertificato;
+		this.note = note;
+		this.attachment = attachment;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -155,6 +180,5 @@ public class RichiestaPermesso {
 	public void setTipoPermesso(TipoPermesso tipoPermesso) {
 		this.tipoPermesso = tipoPermesso;
 	}
-
 
 }

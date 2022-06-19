@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.repository.messaggio.MessaggioRepository;
@@ -19,8 +18,8 @@ public class MessaggioServiceImpl implements MessaggioService {
 	private MessaggioRepository messaggioRepository;
 
 	@Override
-	@Transactional
-	public void aggiorna(Messaggio messaggioInstance) {
+	public List<Messaggio> listAllElements() {
+		return (List<Messaggio>) messaggioRepository.findAll();
 	}
 
 	@Override
@@ -62,13 +61,6 @@ public class MessaggioServiceImpl implements MessaggioService {
 		messaggioRepository.deleteById(idMessaggio);
 	}
 
-	@Override
-	@Transactional
-	public List<Dipendente> findByExample(Messaggio example) {
-
-		return null;
-	}
-	
 	@Override
 	@Transactional(readOnly = true)
 	public Messaggio findByRichiesta(Long idRichiesta) {

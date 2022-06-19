@@ -150,6 +150,10 @@ public class RichiestaPermessoDTO {
 	public void setApprovato(boolean approvato) {
 		this.approvato = approvato;
 	}
+	
+	public boolean isApprovato() {
+		return approvato;
+	}
 
 	public boolean getGiornoSingolo() {
 		return giornoSingolo;
