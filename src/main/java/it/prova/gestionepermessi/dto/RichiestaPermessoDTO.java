@@ -35,6 +35,8 @@ public class RichiestaPermessoDTO {
 
 	private DipendenteDTO dipendenteDTO;
 
+	private Long dipendenteId;
+
 	public RichiestaPermessoDTO() {
 
 	}
@@ -165,6 +167,14 @@ public class RichiestaPermessoDTO {
 		this.dipendenteDTO = dipendenteDTO;
 	}
 
+	public Long getDipendenteId() {
+		return dipendenteId;
+	}
+
+	public void setDipendenteId(Long dipendenteId) {
+		this.dipendenteId = dipendenteId;
+	}
+
 	public RichiestaPermesso buildRichiestaPermessoFromModel() {
 		return new RichiestaPermesso(this.id, this.dataInizio, this.dataFine, false, this.codiceCertificato, this.note,
 				this.tipoPermesso);
@@ -182,5 +192,10 @@ public class RichiestaPermessoDTO {
 		return richieste.stream().map(richiesta -> RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiesta))
 				.collect(Collectors.toList());
 	}
-
+	
+	public static List<RichiestaPermessoDTO> buildRichiestaPermessoDTOFromModelList(List<RichiestaPermesso> richieste) {
+		return richieste.stream().map(richiesta -> RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiesta))
+				.collect(Collectors.toList());
+	}
+	
 }

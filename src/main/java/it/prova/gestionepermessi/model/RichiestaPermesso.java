@@ -33,7 +33,7 @@ public class RichiestaPermesso {
 	@Column(name = "datafine")
 	private Date dataFine;
 	@Column(name = "approvato")
-	private Boolean approvato;
+	private boolean approvato;
 	@Column(name = "codicecertificato")
 	private String codiceCertificato;
 	@Column(name = "note")
@@ -72,7 +72,7 @@ public class RichiestaPermesso {
 		this.dipendente = dipendente;
 	}
 
-	public RichiestaPermesso(Long id, Date dataInizio, Date dataFine, Boolean approvato, String codiceCertificato,
+	public RichiestaPermesso(Long id, Date dataInizio, Date dataFine, boolean approvato, String codiceCertificato,
 			String note, TipoPermesso tipoPermesso) {
 		super();
 		this.id = id;
@@ -156,12 +156,5 @@ public class RichiestaPermesso {
 		this.tipoPermesso = tipoPermesso;
 	}
 
-	public Boolean getApprovato() {
-		return approvato;
-	}
-
-	public void setApprovato(Boolean approvato) {
-		this.approvato = approvato;
-	}
 
 }

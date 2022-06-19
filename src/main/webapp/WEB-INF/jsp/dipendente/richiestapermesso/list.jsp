@@ -51,8 +51,10 @@
 										<td>${richiestaPermessoItem.approvato?'APPROVATO':'NON APPROVATO' }</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richiestapermesso/showRichiestaPermesso/${richiestaPermessoItem.id}">Visualizza</a>
-											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richiestapermesso/editRichiestaPermesso/${richiestaPermessoItem.id}">Edit</a>
-												
+											
+											<c:if test="${richiestaPermessoItem.getApprovato() == false}">
+      											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/richiestapermesso/editRichiestaPermesso/${richiestaPermessoItem.id}">Edit</a>
+											</c:if>
 											<c:if test="${richiestaPermessoItem.getApprovato() == false}">
 												<a class="btn  btn-sm btn-outline-danger ml-2 mr-2" href="${pageContext.request.contextPath}/richiestapermesso/deleteRichiestaPermesso/${richiestaPermessoItem.id}">Delete</a>
 											</c:if>

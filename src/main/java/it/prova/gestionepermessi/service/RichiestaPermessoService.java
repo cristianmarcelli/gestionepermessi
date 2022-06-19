@@ -2,8 +2,10 @@ package it.prova.gestionepermessi.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.prova.gestionepermessi.dto.RichiestaPermessoSearchDTO;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 
 public interface RichiestaPermessoService {
@@ -18,8 +20,15 @@ public interface RichiestaPermessoService {
 
 	public void rimuovi(Long idRichiestaPermesso);
 
-	public List<RichiestaPermesso> findByExample(RichiestaPermesso example);
+	public Page<RichiestaPermesso> findByExample(RichiestaPermessoSearchDTO example, Integer pageNo, Integer pageSize,
+			String sortBy);
 
 	public List<RichiestaPermesso> listAllRichiestePermessiPerIdDipendente(Long id);
+
+	// ###########################
+	public void aggiornaProva(RichiestaPermesso richiestaPermessoInstance, boolean giornoSingolo, MultipartFile file);
+	// ###########################
+
+	public void approvaRichiesta(Long idRichiestaPermesso);
 
 }
