@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,7 +64,7 @@ public class RichiestaPermessoController {
 		if (auth == null) {
 			throw new RuntimeException("Error");
 		}
-		
+
 		Dipendente dipendenteInsessione = dipendenteService.cercaPerUsername(auth.getName());
 		if (dipendenteInsessione == null) {
 			throw new RuntimeException("Error");
@@ -82,11 +83,11 @@ public class RichiestaPermessoController {
 	public ModelAndView listRichiestaPermessoDipendente() {
 		ModelAndView mv = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		if (auth == null) {
 			throw new RuntimeException("Error");
 		}
-		
+
 		Dipendente dipendenteSpecifico = dipendenteService.cercaPerUsername(auth.getName());
 
 		List<RichiestaPermesso> richiestePermessi = richiestaPermessoService
@@ -96,6 +97,14 @@ public class RichiestaPermessoController {
 				RichiestaPermessoDTO.createRichiestaPermessoDTOListFromModelList(richiestePermessi));
 		mv.setViewName("dipendente/richiestapermesso/list");
 		return mv;
+	}
+
+	// visualizza richiesta singolo dipendente
+	@GetMapping("/showRichiestaPermesso/{idRichiestaPermesso}")
+	public String showRichiestaPermesso(@PathVariable(required = true) Long idRichiestaPermesso, Model model) {
+		model.addAttribute("show_richiestapermesso_attr",
+				richiestaPermessoService.caricaSingoloElemento(idRichiestaPermesso));
+		return "dipendente/richiestapermesso/show";
 	}
 
 }

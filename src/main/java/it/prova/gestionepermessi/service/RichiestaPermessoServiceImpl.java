@@ -36,8 +36,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Override
 	@Transactional(readOnly = true)
 	public RichiestaPermesso caricaSingoloElemento(Long id) {
-
-		return null;
+		return richiestaPermessoRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 		return null;
 	}
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<RichiestaPermesso> listAllRichiestePermessiPerIdDipendente(Long id) {
