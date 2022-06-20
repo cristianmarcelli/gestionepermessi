@@ -245,16 +245,16 @@ public class RichiestaPermessoController {
 
 		return "backoffice/richiestapermesso/search";
 	}
-	
-	
+
 	// Approva richiesta
-		@PostMapping("/approvaRichiesta")
-		public String approvaRichiesta(
-				@RequestParam(name = "idRichiestaForApprovaRichiesta", required = true) Long idRichiestapermesso) {
+	@PostMapping("/approvaRichiesta")
+	public String approvaRichiesta(
+			@RequestParam(name = "idRichiestaForApprovaRichiesta", required = true) Long idRichiestapermesso, RedirectAttributes redirectAttrs) {
 
-			richiestaPermessoService.approvaRichiesta(idRichiestapermesso);
+		richiestaPermessoService.approvaRichiesta(idRichiestapermesso);
 
-			return "redirect:/richiestapermesso/list";
-		}
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/richiestapermesso/listAllRichiesteBackoffice";
+	}
 
 }

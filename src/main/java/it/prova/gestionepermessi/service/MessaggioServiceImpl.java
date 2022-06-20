@@ -68,8 +68,16 @@ public class MessaggioServiceImpl implements MessaggioService {
 	}
 
 	@Override
+	@Transactional
 	public Messaggio caricaSingoloMessaggio(Long idMessaggio) {
 		return messaggioRepository.findById(idMessaggio).orElse(null);
 	}
+	
+	@Override
+	@Transactional
+	public Messaggio caricaSingoloMessaggioEager(Long idMessaggio) {
+		return messaggioRepository.findByIdEager(idMessaggio);
+	}
+	
 
 }

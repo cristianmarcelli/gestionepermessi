@@ -35,9 +35,11 @@ public class MessaggioController {
 	//Visualizza singolo messaggio
 	@GetMapping("/show/{idMessaggio}")
 	public String showUtente(@PathVariable(required = true) Long idMessaggio, Model model) {
-		MessaggioDTO messaggioDTO = MessaggioDTO.buildMessaggioDTOFromModel(messaggioService.caricaSingoloMessaggio(idMessaggio));
+//		MessaggioDTO messaggioDTO = MessaggioDTO.buildMessaggioDTOFromModel(messaggioService.caricaSingoloMessaggio(idMessaggio));
 		
-		model.addAttribute("show_messaggio_attr", messaggioDTO);
+		
+		
+		model.addAttribute("show_messaggio_attr", messaggioService.caricaSingoloMessaggioEager(idMessaggio));
 		return "backoffice/messaggio/show";
 	}
 

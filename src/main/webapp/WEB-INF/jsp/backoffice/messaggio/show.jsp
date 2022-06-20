@@ -52,6 +52,31 @@
 					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_messaggio_attr.dataLettura}" /></dd>
 			    	</dl>
 			    	
+			    	<!-- info Richiesta permesso -->
+			    	<p>
+					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					    Info Richiesta Permesso
+					  </a>
+					</p>
+					<div class="collapse" id="collapseExample">
+					  <div class="card card-body">
+					  	<dl class="row">
+						  <dt class="col-sm-3 text-right">Id:</dt>
+						  <dd class="col-sm-9">${show_messaggio_attr.richiestaPermesso.id}</dd>
+					   	</dl>
+					   	<dl class="row">
+						  <dt class="col-sm-3 text-right">Codice Certificato:</dt>
+						  <dd class="col-sm-9">${show_messaggio_attr.richiestaPermesso.codiceCertificato}</dd>
+					   	</dl>
+					   	<dl class="row">
+						  <dt class="col-sm-3 text-right">Tipo Permesso:</dt>
+						  <dd class="col-sm-9">${show_messaggio_attr.richiestaPermesso.tipoPermesso}</dd>
+					   	</dl>
+					    
+					  </div>
+					<!-- end info  -->
+					</div>
+			    	
 			    <!-- end card body -->
 			    </div>
 			    

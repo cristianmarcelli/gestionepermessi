@@ -17,4 +17,6 @@ public interface MessaggioService {
 
 	public Messaggio caricaSingoloMessaggio(Long idMessaggio);
 
+	Messaggio caricaSingoloMessaggioEager(Long idMessaggio);
+
 }

@@ -161,6 +161,9 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		if (richiestaInstance.isApprovato() == false) {
 			richiestaInstance.setApprovato(true);
 		}
+		else if (richiestaInstance.isApprovato() == true) {
+			richiestaInstance.setApprovato(false);
+		}
 
 	}
 

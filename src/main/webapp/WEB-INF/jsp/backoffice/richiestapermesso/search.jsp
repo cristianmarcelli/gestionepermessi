@@ -76,6 +76,59 @@
 									<form:errors  path="codiceCertificato" cssClass="error_field" />
 								</div>
 								
+								<div class="col-md-6">
+										<label for="dipendenteSearchInput" class="form-label">Dipendente:</label>
+										<spring:bind path="dipendenteDTO">
+											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="dipendenteSearchInput"
+												name="dipendenteInput" value="${search_richiesta_attr.dipendenteDTO.nome}${empty search_richiesta_attr.dipendenteDTO.nome?'':' '}${search_richiesta_attr.dipendenteDTO.cognome}">
+										</spring:bind>
+										<input type="hidden" name="dipendenteId" id="dipendenteId" value="${search_richiesta_attr.dipendenteDTO.id}">
+										<form:errors  path="dipendenteDTO" cssClass="error_field" />
+									</div>
+								
+<!-- 									<div class="col-md-6 form-check" id="dipDivId"> -->
+<!-- 										<p>Dipendente:</p> -->
+<%-- 										<form:radiobuttons itemValue="id" itemLabel="nome"  element="div class='form-check'" items="${search_richiestapermesso_dipendente_attr}" path="dipendenteId" /> --%>
+<!-- 									</div> -->
+								
+								<%-- FUNZIONE JQUERY UI PER AUTOCOMPLETE --%>
+								<script>
+									$("#dipendenteSearchInput").autocomplete({
+										 source: function(request, response) {
+											 	$('#dipendenteId').val('');
+											 	
+										        $.ajax({
+										            url: "${pageContext.request.contextPath}/backoffice/searchDipendentiAjax",
+										            datatype: "json",
+										            data: {
+										                term: request.term,   
+										            },
+										            success: function(data) {
+										                response($.map(data, function(item) {
+										                    return {
+											                    label: item.label,
+											                    value: item.value
+										                    }
+										                }))
+										            }
+										        });
+										    },
+										//quando seleziono la voce nel campo deve valorizzarsi la descrizione
+									    focus: function(event, ui) {
+									        $("#dipendenteSearchInput").val(ui.item.label);
+									        return false;
+									    },
+									    minLength: 2,
+									    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
+									    select: function( event, ui ) {
+									    	$('#dipendenteId').val(ui.item.value);
+									    	//console.log($('#dipendenteId').val())
+									        return false;
+									    }
+									});
+								</script>
+								<!-- end script autocomplete -->
+								
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">

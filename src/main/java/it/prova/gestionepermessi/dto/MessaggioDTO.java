@@ -10,13 +10,20 @@ import it.prova.gestionepermessi.model.Messaggio;
 
 public class MessaggioDTO {
 	private Long id;
+
 	@NotBlank(message = "{testo.notblank}")
 	private String testo;
+
 	@NotBlank(message = "{oggetto.notblank}")
 	private String oggetto;
+
 	private boolean letto;
+
 	private Date dataInserimento;
 	private Date dataLettura;
+
+	private RichiestaPermessoDTO richiestaPermessoDTO;
+
 	private Long dipendenteId;
 
 	public MessaggioDTO() {
@@ -29,6 +36,20 @@ public class MessaggioDTO {
 		this.letto = letto;
 		this.dataInserimento = dataInserimento;
 		this.dataLettura = dataLettura;
+	}
+
+	public MessaggioDTO(Long id, @NotBlank(message = "{testo.notblank}") String testo,
+			@NotBlank(message = "{oggetto.notblank}") String oggetto, boolean letto, Date dataInserimento,
+			Date dataLettura, RichiestaPermessoDTO richiestaPermessoDTO, Long dipendenteId) {
+		super();
+		this.id = id;
+		this.testo = testo;
+		this.oggetto = oggetto;
+		this.letto = letto;
+		this.dataInserimento = dataInserimento;
+		this.dataLettura = dataLettura;
+		this.richiestaPermessoDTO = richiestaPermessoDTO;
+		this.dipendenteId = dipendenteId;
 	}
 
 	public Long getId() {
@@ -85,6 +106,14 @@ public class MessaggioDTO {
 
 	public void setDipendenteId(Long dipendenteId) {
 		this.dipendenteId = dipendenteId;
+	}
+
+	public RichiestaPermessoDTO getRichiestaPermessoDTO() {
+		return richiestaPermessoDTO;
+	}
+
+	public void setRichiestaPermessoDTO(RichiestaPermessoDTO richiestaPermessoDTO) {
+		this.richiestaPermessoDTO = richiestaPermessoDTO;
 	}
 
 	public static MessaggioDTO buildMessaggioDTOFromModel(Messaggio messaggioModel) {

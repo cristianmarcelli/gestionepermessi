@@ -1,5 +1,6 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -52,7 +53,7 @@
 					  <dd class="col-sm-9">${show_richiestapermesso_attr.approvato?'APPROVATO':'NON APPROVATO' }</dd>
 			    	</dl>
 			    	
-			    	<!-- info Regista -->
+			    	<!-- info Dipendente -->
 			    	<p>
 					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					    Info Dipendente
@@ -74,17 +75,27 @@
 					   	</dl>
 					    
 					  </div>
-					<!-- end info Richiesta permesso -->
+					<!-- end info Dipendente -->
 					</div>
 			    	
 			    <!-- end card body -->
 			    </div>
 			    
 			    <div class='card-footer'>
-			        <a href="${pageContext.request.contextPath }/richiestapermesso/listAllRichiesteBackoffice" class='btn btn-outline-secondary' style='width:80px'>
-			            <i class='fa fa-chevron-left'></i> Back
-			        </a>
-			    </div>
+			    
+			    <form:form method="post" action="${pageContext.request.contextPath}/richiestapermesso/approvaRichiesta" class="row g-3" novalidate="novalidate">
+			    
+			    	<input type="hidden" name = "idRichiestaForApprovaRichiesta" value = "${show_richiestapermesso_attr.id}">
+			    	<div class="col-12">
+					        <a href="${pageContext.request.contextPath }/richiestapermesso/listAllRichiesteBackoffice" class='btn btn-outline-secondary' style='width:80px'>
+					            <i class='fa fa-chevron-left'></i> Back
+					        </a>
+					        	<input type="submit" name="submit" value="Approva" id="submit" class="btn btn-outline-primary">	
+					      	  <input type="submit" name="submit" value="Nega" id="submit" class="btn btn-outline-danger">
+			        </div>
+			        
+			        </form:form>
+			   	</div>
 			<!-- end card -->
 			</div>	
 	
