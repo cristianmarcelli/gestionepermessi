@@ -15,13 +15,13 @@ public class DipendenteDTO {
 
 	private Long id;
 
-	@NotBlank
+	@NotBlank(message = "{nome.notblank}")
 	@Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String nome;
-	@NotBlank
+	@NotBlank(message = "{cognome.notblank}")
 	@Size(min = 2, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String cognome;
-	@NotBlank
+	@NotBlank(message = "{codFis.notblank}")
 	@Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String codFis;
 

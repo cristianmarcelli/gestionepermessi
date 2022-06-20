@@ -77,6 +77,14 @@ public class RichiestaPermessoController {
 	public String save(@Valid @ModelAttribute("insert_richiestapermesso_attr") RichiestaPermessoDTO richiestaDTO,
 			BindingResult result, RedirectAttributes redirectAttrs) {
 
+		if (richiestaDTO.getDataInizio().after(richiestaDTO.getDataFine())) {
+			result.rejectValue("dataInizio", "dataInizio.maggioreDataFine");
+		}
+		
+		if (result.hasErrors()) {
+			return "dipendente/richiestapermesso/insert";
+		}
+		
 		RichiestaPermesso richiestaDaInserire = richiestaDTO.buildRichiestaPermessoFromModel();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -165,12 +173,6 @@ public class RichiestaPermessoController {
 
 		Messaggio messaggioItem = messaggioService.findByRichiesta(idRichiestapermesso);
 
-//		Attachment attachmentItem = attachmentService.findByRichiesta(idRichiestapermesso);
-//
-//		if (attachmentItem != null) {
-//			attachmentService.rimuovi(attachmentItem.getId());
-//		}
-
 		if (messaggioItem != null) {
 			messaggioService.rimuovi(messaggioItem.getId());
 		}
@@ -178,7 +180,7 @@ public class RichiestaPermessoController {
 		richiestaPermessoService.rimuovi(idRichiestapermesso);
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "dipendente/richiestapermesso/list";
+		return "redirect:/richiestapermesso/listRichiestaPermesso";
 	}
 
 	// modifica richiesta da parte del dipendente
@@ -190,20 +192,6 @@ public class RichiestaPermessoController {
 				RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaPermessoModel));
 		return "dipendente/richiestapermesso/edit";
 	}
-//
-//	@PostMapping("/updateRichiestaPermesso")
-//	public String updateRichiestaPermesso(
-//			@ModelAttribute("edit_richiestapermesso_attr") RichiestaPermessoDTO richiestaPermessoDTO,
-//			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
-//
-//		richiestaPermessoService.aggiorna(richiestaPermessoDTO.buildRichiestaPermessoFromModel());
-//		
-////		richiestaPermessoService.aggiorna(richiestaPermessoDTO.buildRichiestaPermessoFromModel(),
-////				richiestaPermessoDTO.getGiornoSingolo(), richiestaPermessoDTO.getAttachment());
-//
-//		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-//		return "redirect:listRichiestaPermesso";
-//	}
 
 	@PostMapping("/updateRichiestaPermesso")
 	public String updateRichiestaPermesso(

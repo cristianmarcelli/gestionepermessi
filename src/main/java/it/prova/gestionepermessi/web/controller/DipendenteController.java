@@ -113,7 +113,11 @@ public class DipendenteController {
 	@PostMapping("/save")
 	public String saveDipendente(@Valid @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
 			BindingResult result, RedirectAttributes redirectAttrs, HttpServletRequest request) {
-
+		
+		if (dipendenteDTO.getDataNascita().after(dipendenteDTO.getDataAssunzione())) {
+			result.rejectValue("dataNascita", "dataNascita.maggioreDataAssunzione");
+		}
+		
 		if (result.hasErrors()) {
 			return "backoffice/dipendente/insert";
 		}
