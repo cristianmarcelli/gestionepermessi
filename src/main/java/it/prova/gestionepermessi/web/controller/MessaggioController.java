@@ -3,6 +3,9 @@ package it.prova.gestionepermessi.web.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -33,6 +36,17 @@ public class MessaggioController {
 		mv.setViewName("backoffice/messaggio/list");
 		return mv;
 	}
+	
+	//listAll messaggi non letti
+	@GetMapping("listAllMessaggiNonLetti")
+	public ModelAndView listAllMessaggiNonLetti() {
+		ModelAndView mv = new ModelAndView();
+		List<Messaggio> messaggi = messaggioService.findAllMessaggiNonLetti();
+		
+		mv.addObject("messaggi_list_attribute", MessaggioDTO.buildMessaggioDTOFromModelList(messaggi));
+		mv.setViewName("backoffice/messaggio/list");
+		return mv;
+	}
 
 	// Visualizza singolo messaggio
 	@GetMapping("/show/{idMessaggio}")
@@ -57,6 +71,16 @@ public class MessaggioController {
 		List<Messaggio> messaggi = messaggioService.findByExample(messaggioExample.buildMessaggioModel());
 		model.addAttribute("messaggi_list_attribute", MessaggioDTO.buildMessaggioDTOFromModelList(messaggi));
 		return "backoffice/messaggio/list";
+	}
+	
+	
+	@GetMapping(value = "/presentiMessaggiNonLetti", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<String> checkPresenzaMessaggiNonLetti() {
+
+		if (!messaggioService.findAllMessaggiNonLetti().isEmpty())
+			return new ResponseEntity<String>(HttpStatus.OK);
+		else
+			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 
 }

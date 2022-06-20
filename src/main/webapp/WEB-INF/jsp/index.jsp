@@ -133,6 +133,27 @@
 			</sec:authorize>
 			
 			
+			
+					<sec:authorize access="hasRole('BO_USER')">
+						   <script type="text/javascript">
+						$(document).ready(function()  {
+						$.ajax({
+						    type: 'GET',
+						    url:  "${pageContext.request.contextPath}/messaggio/presentiMessaggiNonLetti",
+						    statusCode: {
+						        200: function(responseObject, textStatus, jqXHR) {
+						        $('#messaggiNonLettiModal').modal('show');
+						        },  
+						    204: function(responseObject, textStatus, jqXHR) {
+						        // no content quindi non faccio nulla
+						        }  
+						    }
+						});
+						});
+						</script>
+					</sec:authorize>
+			
+			
 			<sec:authorize access="hasRole('DIPENDENTE_USER')">
 			<!-- Begin page content -->
 			<main class="flex-shrink-0">
@@ -175,5 +196,30 @@
 			
 			<!-- Footer -->
 			<jsp:include page="./footer.jsp" />
+			
+			
+			
+					<!-- Modal -->
+					<div class="modal fade" id="messaggiNonLettiModal" tabindex="-1"  aria-labelledby="messaggiNonLettiModalLabel"
+					    aria-hidden="true">
+					    <div class="modal-dialog" >
+					        <div class="modal-content">
+					            <div class="modal-header">
+					                <h5 class="modal-title" id="messaggiNonLettiModalLabel">Info presenza messaggi</h5>
+					                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					            </div>
+					            <div class="modal-body">
+					                Sono presenti messaggi non letti. Accedere all'area messaggi?
+					            </div>
+					            <div class="modal-footer">
+					                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Torna in Pagina</button>
+					                <a href="${pageContext.request.contextPath }/messaggio/listAllMessaggiNonLetti" class='btn btn-primary' >
+					            Continua
+					        </a>
+					            </div>
+					        </div>
+					    </div>
+					    
+					</div>
 	  </body>
 </html>

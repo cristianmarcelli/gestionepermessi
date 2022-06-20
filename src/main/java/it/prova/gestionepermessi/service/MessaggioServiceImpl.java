@@ -141,4 +141,10 @@ public class MessaggioServiceImpl implements MessaggioService {
 
 	}
 
+	@Override
+	public List<Messaggio> findAllMessaggiNonLetti() {
+		
+		return messaggioRepository.findAllMessaggiNonLetti();
+	}
+
 }

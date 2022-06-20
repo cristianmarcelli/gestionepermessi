@@ -90,8 +90,12 @@
 					        <a href="${pageContext.request.contextPath }/richiestapermesso/listAllRichiesteBackoffice" class='btn btn-outline-secondary' style='width:80px'>
 					            <i class='fa fa-chevron-left'></i> Back
 					        </a>
+					        	<c:if test="${show_richiestapermesso_attr.isApprovato() == false}">
 					        	<input type="submit" name="submit" value="Approva" id="submit" class="btn btn-outline-primary">	
+					        </c:if>
+					        <c:if test="${show_richiestapermesso_attr.isApprovato() == true}">
 					      	  <input type="submit" name="submit" value="Nega" id="submit" class="btn btn-outline-danger">
+					        </c:if>
 			        </div>
 			        
 			        </form:form>

@@ -23,4 +23,6 @@ public interface MessaggioService {
 
 	public void setLetturaTrue(Long idMessaggio);
 
+	public List<Messaggio> findAllMessaggiNonLetti();
+
 }
