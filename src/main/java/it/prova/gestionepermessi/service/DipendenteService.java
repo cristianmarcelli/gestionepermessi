@@ -27,4 +27,6 @@ public interface DipendenteService {
 	
 	Dipendente cercaPerUsername(String username);
 	
+	public List<Dipendente> cercaByCognomeENomeILike(String term);
+	
 }

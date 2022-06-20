@@ -23,7 +23,7 @@ public class MessaggioServiceImpl implements MessaggioService {
 
 	@Autowired
 	private MessaggioRepository messaggioRepository;
-	
+
 	@Autowired
 	private EntityManager entityManager;
 
@@ -59,7 +59,7 @@ public class MessaggioServiceImpl implements MessaggioService {
 				+ " al giorno " + richiestaInstance.getDataFine() + parteFinaleMessaggio);
 
 		messaggioInstance.setDataInserimento(new Date());
-		messaggioInstance.setLetto(true);
+		messaggioInstance.setLetto(false);
 		messaggioInstance.setRichiestaPermesso(richiestaInstance);
 
 		messaggioRepository.save(messaggioInstance);
@@ -82,7 +82,7 @@ public class MessaggioServiceImpl implements MessaggioService {
 	public Messaggio caricaSingoloMessaggio(Long idMessaggio) {
 		return messaggioRepository.findById(idMessaggio).orElse(null);
 	}
-	
+
 	@Override
 	@Transactional
 	public Messaggio caricaSingoloMessaggioEager(Long idMessaggio) {
@@ -113,11 +113,10 @@ public class MessaggioServiceImpl implements MessaggioService {
 			whereClauses.add("m.dataLettura >= :dataLettura ");
 			paramaterMap.put("dataLettura", example.getDataLettura());
 		}
-		
+
 		if (example.isLetto() == true) {
 			whereClauses.add(" m.letto = true ");
-		}
-		else if (example.isLetto() == false){
+		} else if (example.isLetto() == false) {
 			whereClauses.add(" m.letto = false ");
 		}
 
@@ -131,6 +130,15 @@ public class MessaggioServiceImpl implements MessaggioService {
 
 		return typedQuery.getResultList();
 	}
-	
+
+	@Override
+	public void setLetturaTrue(Long idMessaggio) {
+
+		Messaggio messaggioInstance = caricaSingoloMessaggio(idMessaggio);
+
+		messaggioInstance.setDataLettura(new Date());
+		messaggioInstance.setLetto(true);
+
+	}
 
 }

@@ -43,12 +43,12 @@
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Data Inizio:</dt>
+					  <dt class="col-sm-3 text-right">Data Inserimento:</dt>
 					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_messaggio_attr.dataInserimento}" /></dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Data Fine:</dt>
+					  <dt class="col-sm-3 text-right">Data Lettura:</dt>
 					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_messaggio_attr.dataLettura}" /></dd>
 			    	</dl>
 			    	

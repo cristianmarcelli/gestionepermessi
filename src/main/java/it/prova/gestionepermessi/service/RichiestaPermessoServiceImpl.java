@@ -109,36 +109,38 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		richiestaPermessoRepository.deleteById(idRichiestaPermesso);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
 	public Page<RichiestaPermesso> findByExample(RichiestaPermessoSearchDTO example, Integer pageNo, Integer pageSize,
 			String sortBy) {
 		Specification<RichiestaPermesso> specificationCriteria = (root, query, cb) -> {
 
 			List<Predicate> predicates = new ArrayList<Predicate>();
-
+			
 			root.fetch("dipendente", JoinType.INNER);
-
-			if (StringUtils.isNotEmpty(example.getCodiceCertificato()))
-				predicates.add(cb.like(cb.upper(root.get("CodiceCertificato")),
-						"%" + example.getCodiceCertificato().toUpperCase() + "%"));
-
+			
+			if(StringUtils.isNotEmpty(example.getCodiceCertificato()))
+				predicates.add(cb.like(cb.upper(root.get("codiceCertificato")), "%"+ example.getCodiceCertificato().toUpperCase()+"%" ));
+			
 			if (example.getDataInizio() != null)
 				predicates.add(cb.greaterThanOrEqualTo(root.get("dataInizio"), example.getDataInizio()));
-
+			
 			if (example.getDataFine() != null)
 				predicates.add(cb.greaterThanOrEqualTo(root.get("dataFine"), example.getDataFine()));
-
+			
 			if (example.getTipoPermesso() != null)
 				predicates.add(cb.equal(root.get("tipoPermesso"), example.getTipoPermesso()));
-
+		
 			if (example.getDipendente() != null && example.getDipendente().getId() != null) {
-				predicates.add(cb.equal(root.join("dipendente").get("id"), example.getDipendente().getId()));
+				predicates.add(
+						cb.equal(root.join("dipendente").get("id"), example.getDipendente().getId()));
 			}
 			query.distinct(true);
 			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
 
 		Pageable paging = null;
-
+		// se non passo parametri di paginazione non ne tengo conto
 		if (pageSize == null || pageSize < 10)
 			paging = Pageable.unpaged();
 		else
@@ -160,8 +162,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 		if (richiestaInstance.isApprovato() == false) {
 			richiestaInstance.setApprovato(true);
-		}
-		else if (richiestaInstance.isApprovato() == true) {
+		} else if (richiestaInstance.isApprovato() == true) {
 			richiestaInstance.setApprovato(false);
 		}
 

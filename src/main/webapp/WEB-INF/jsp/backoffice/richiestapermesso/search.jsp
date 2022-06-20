@@ -32,7 +32,7 @@
 			    </div>
 			    <div class='card-body'>
 	
-						<form:form modelAttribute="search_richiesta_attr" method="post" action="${pageContext.request.contextPath}/richiestapermesso/listRichieste" novalidate="novalidate" class="row g-3">
+						<form:form modelAttribute="search_richiesta_attr" method="post" action="${pageContext.request.contextPath}/richiestapermesso/listForSearchRichiestaPermesso" novalidate="novalidate" class="row g-3">
 						
 							<div class="col-md-3">
 									<label for="tipoPermesso" class="form-label">Tipo Permesso</label>
@@ -98,7 +98,7 @@
 											 	$('#dipendenteId').val('');
 											 	
 										        $.ajax({
-										            url: "${pageContext.request.contextPath}/backoffice/searchDipendentiAjax",
+										            url: "${pageContext.request.contextPath}/richiestapermesso/searchDipendentiAjax",
 										            datatype: "json",
 										            data: {
 										                term: request.term,   

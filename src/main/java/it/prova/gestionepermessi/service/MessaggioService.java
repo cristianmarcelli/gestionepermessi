@@ -21,4 +21,6 @@ public interface MessaggioService {
 
 	Messaggio caricaSingoloMessaggioEager(Long idMessaggio);
 
+	public void setLetturaTrue(Long idMessaggio);
+
 }

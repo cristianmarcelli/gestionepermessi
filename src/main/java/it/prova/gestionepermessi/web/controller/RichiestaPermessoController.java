@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
 import it.prova.gestionepermessi.dto.RichiestaPermessoSearchDTO;
 import it.prova.gestionepermessi.model.Dipendente;
@@ -239,17 +246,50 @@ public class RichiestaPermessoController {
 
 	// search richieste backoffice
 	@GetMapping("/searchRichiesteBackoffice")
-	public String searchRichiesteBackoffice(Model model) {
-
+	public String searchRichieste(ModelMap model) {
+		model.addAttribute("search_richiestapermesso_dipendente_attr",
+				DipendenteDTO.createDipendenteDTOListFromModelList(dipendenteService.listAllElements()));
 		model.addAttribute("search_richiesta_attr", new RichiestaPermessoDTO());
-
 		return "backoffice/richiestapermesso/search";
+	}
+
+	@PostMapping("/listForSearchRichiestaPermesso")
+	public String list(RichiestaPermessoSearchDTO richiestaPermesso, @RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
+			ModelMap model) {
+
+		List<RichiestaPermesso> richiestePermessi = richiestaPermessoService
+				.findByExample(richiestaPermesso, pageNo, pageSize, sortBy).getContent();
+		model.addAttribute("richiestepermesso_list_attribute",
+				RichiestaPermessoDTO.createRichiestaPermessoDTOListFromModelList(richiestePermessi));
+		return "backoffice/richiestapermesso/list";
+	}
+
+	@GetMapping(value = "/searchDipendentiAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody String searchDipendenti(@RequestParam String term) {
+
+		List<Dipendente> listaDipendentByTerm = dipendenteService.cercaByCognomeENomeILike(term);
+		return buildJsonResponse(listaDipendentByTerm);
+	}
+
+	private String buildJsonResponse(List<Dipendente> listaDipendenti) {
+		JsonArray ja = new JsonArray();
+
+		for (Dipendente dipendenteItem : listaDipendenti) {
+			JsonObject jo = new JsonObject();
+			jo.addProperty("value", dipendenteItem.getId());
+			jo.addProperty("label", dipendenteItem.getNome() + " " + dipendenteItem.getCognome());
+			ja.add(jo);
+		}
+
+		return new Gson().toJson(ja);
 	}
 
 	// Approva richiesta
 	@PostMapping("/approvaRichiesta")
 	public String approvaRichiesta(
-			@RequestParam(name = "idRichiestaForApprovaRichiesta", required = true) Long idRichiestapermesso, RedirectAttributes redirectAttrs) {
+			@RequestParam(name = "idRichiestaForApprovaRichiesta", required = true) Long idRichiestapermesso,
+			RedirectAttributes redirectAttrs) {
 
 		richiestaPermessoService.approvaRichiesta(idRichiestapermesso);
 
