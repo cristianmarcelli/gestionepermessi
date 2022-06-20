@@ -1,8 +1,15 @@
 package it.prova.gestionepermessi.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +23,9 @@ public class MessaggioServiceImpl implements MessaggioService {
 
 	@Autowired
 	private MessaggioRepository messaggioRepository;
+	
+	@Autowired
+	private EntityManager entityManager;
 
 	@Override
 	public List<Messaggio> listAllElements() {
@@ -77,6 +87,49 @@ public class MessaggioServiceImpl implements MessaggioService {
 	@Transactional
 	public Messaggio caricaSingoloMessaggioEager(Long idMessaggio) {
 		return messaggioRepository.findByIdEager(idMessaggio);
+	}
+
+	@Override
+	@Transactional
+	public List<Messaggio> findByExample(Messaggio example) {
+		Map<String, Object> paramaterMap = new HashMap<String, Object>();
+		List<String> whereClauses = new ArrayList<String>();
+
+		StringBuilder queryBuilder = new StringBuilder("select m from Messaggio m where m.id = m.id ");
+
+		if (StringUtils.isNotEmpty(example.getTesto())) {
+			whereClauses.add(" m.testo  like :testo ");
+			paramaterMap.put("testo", "%" + example.getTesto() + "%");
+		}
+		if (StringUtils.isNotEmpty(example.getOggetto())) {
+			whereClauses.add(" m.oggetto like :oggetto ");
+			paramaterMap.put("oggetto", "%" + example.getOggetto() + "%");
+		}
+		if (example.getDataInserimento() != null) {
+			whereClauses.add("m.dataInserimento >= :dataInserimento ");
+			paramaterMap.put("dataInserimento", example.getDataInserimento());
+		}
+		if (example.getDataLettura() != null) {
+			whereClauses.add("m.dataLettura >= :dataLettura ");
+			paramaterMap.put("dataLettura", example.getDataLettura());
+		}
+		
+		if (example.isLetto() == true) {
+			whereClauses.add(" m.letto = true ");
+		}
+		else if (example.isLetto() == false){
+			whereClauses.add(" m.letto = false ");
+		}
+
+		queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");
+		queryBuilder.append(StringUtils.join(whereClauses, " and "));
+		TypedQuery<Messaggio> typedQuery = entityManager.createQuery(queryBuilder.toString(), Messaggio.class);
+
+		for (String key : paramaterMap.keySet()) {
+			typedQuery.setParameter(key, paramaterMap.get(key));
+		}
+
+		return typedQuery.getResultList();
 	}
 	
 

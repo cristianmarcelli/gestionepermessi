@@ -12,6 +12,8 @@ public interface MessaggioService {
 	public void inserisciNuovo(Messaggio messaggioInstance, RichiestaPermesso richiestaInstance);
 
 	public void rimuovi(Long idMessaggio);
+	
+	public List<Messaggio> findByExample(Messaggio example);
 
 	public Messaggio findByRichiesta(Long idRichiesta);
 

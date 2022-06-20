@@ -20,6 +20,7 @@ public class MessaggioDTO {
 	private boolean letto;
 
 	private Date dataInserimento;
+	
 	private Date dataLettura;
 
 	private RichiestaPermessoDTO richiestaPermessoDTO;
